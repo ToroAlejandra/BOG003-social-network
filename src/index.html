@@ -7,6 +7,36 @@
   <title>Document</title>
 </head>
 <body>
+
+<input type="email" id="email">
+<input type="password"  id="password">
+
   <script type="module" src="main.js"></script>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-firestore.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyAmLYWlzMt0bWxLhX6WT7XPmgOB1hqgLtk",
+    authDomain: "social-network-visibles.firebaseapp.com",
+    projectId: "social-network-visibles",
+    storageBucket: "social-network-visibles.appspot.com",
+    messagingSenderId: "523691410362",
+    appId: "1:523691410362:web:dbc4a8fbc40bd5f30e5383",
+    measurementId: "G-CHDRGNNX09"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
 </body>
 </html>
