@@ -1,4 +1,4 @@
-import { loginFirebase } from '../index.js';
+import { loginGoogle } from '../index.js';
 
 export const login = () => {
 
@@ -15,7 +15,7 @@ export const login = () => {
 
   btn.addEventListener("click", () => {
     console.log('hola');
-    loginFirebase();
+    loginGoogle();
   })
  
 
