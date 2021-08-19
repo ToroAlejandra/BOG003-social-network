@@ -25,6 +25,7 @@ export const signin = () => {
 
   btnSigninEmail.addEventListener("click", () => {
     console.log('Signin');
+    signUpWithEmailPassword();
     sendLink();
   });
 

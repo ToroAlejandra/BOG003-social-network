@@ -7,30 +7,30 @@ export const loginGoogle = () => {
 .signInWithPopup(provider)
 .then((result) => {
   /** @type {firebase.auth.OAuthCredential} */
-  var credential = result.credential;
+  let credential = result.credential;
 
   // This gives you a Google Access Token. You can use it to access the Google API.
-  var token = credential.accessToken;
+  let token = credential.accessToken;
   // The signed-in user info.
-  var user = result.user;
+  let user = result.user;
   console.log(user);
   // ...
 }).catch((error) => {
   // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
+  let errorCode = error.code;
+  let errorMessage = error.message;
   // The email of the user's account used.
-  var email = error.email;
+  let email = error.email;
   // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
+  let credential = error.credential;
   console.log('error', errorMessage);
   // ...
 });
 }
 
-export const sendLink = () => {
+export const sendLinkOne = () => {
   email = document.querySelector('#inputEmail').value;
-  var actionCodeSettings = {
+  let actionCodeSettings = {
     // URL you want to redirect back to. The domain (www.example.com) for this
     // URL must be in the authorized domains list in the Firebase Console.
     url: 'http://localhost/?email=' + firebase.auth().currentUser.email,
@@ -56,12 +56,21 @@ export const sendLink = () => {
     // ...
   })
   .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
+    let errorCode = error.code;
+    let errorMessage = error.message;
     console.log("errorCode:  ",errorCode,"  errorMessage  ",errorMessage);  
     // ...
   });
 };
+
+export const sendLink = () => { 
+  // [START auth_send_email_verification] 
+  firebase.auth().currentUser.sendEmailVerification() 
+  .then(() => { // Email verification sent! // ... 
+  });  
+  // [END auth_send_email_verification] 
+  console.log ('...') ;
+}; 
 
 export const signUpWithEmailPassword = () => {
   email = document.querySelector('#inputEmail').value;
@@ -70,12 +79,12 @@ export const signUpWithEmailPassword = () => {
   firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       // Signed in 
-      var user = userCredential.user;
+      let user = userCredential.user;
       // ...
     })
     .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      let errorCode = error.code;
+      let errorMessage = error.message;
       // ..
     });
   // [END auth_signup_password]
