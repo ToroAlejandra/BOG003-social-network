@@ -5,6 +5,10 @@ import { changeRoute } from './lib/router.js';
 
 const init = () => {
   document.getElementById('root').appendChild(login()); 
+  if (window.location.hash != ''){
+    changeRoute(window.location.hash);
+  }
+
   window.addEventListener('hashchange', () => {
     console.log(window.location.hash);
     changeRoute(window.location.hash);

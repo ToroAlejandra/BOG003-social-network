@@ -1,44 +1,68 @@
-// aqui exportaras las funciones que necesites
+// declarar email como variable gobal
+let email;
 
-export const loginFirebase = () => {
+export const loginGoogle = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth()
 .signInWithPopup(provider)
 .then((result) => {
   /** @type {firebase.auth.OAuthCredential} */
-  var credential = result.credential;
+  let credential = result.credential;
 
   // This gives you a Google Access Token. You can use it to access the Google API.
-  var token = credential.accessToken;
+  let token = credential.accessToken;
   // The signed-in user info.
-  var user = result.user;
+  let user = result.user;
   console.log(user);
   // ...
 }).catch((error) => {
   // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
+  let errorCode = error.code;
+  let errorMessage = error.message;
   // The email of the user's account used.
-  var email = error.email;
+  let email = error.email;
   // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-  console.log('error', errorMessage);
+  let credential = error.credential;
+  console.log('errorcredencial', credential, '\n errorMessaage', errorMessage);
   // ...
 });
 }
 
+//enviar link de confirmación al correo
+export const sendLink = () => { 
+  // [START auth_send_email_verification] 
+  firebase.auth().currentUser.sendEmailVerification() 
+  .then(() => { // Email verification sent! // ... 
+  });  
+  // [END auth_send_email_verification] 
+  console.log ('...') ;
+}; 
 
+//ingreso con correo y contraseña
+export const signUpWithEmailPassword = () => {
+  email = document.querySelector('#inputEmail').value;
+  let password = document.querySelector('#inputPass').value;
+  // [START auth_signup_password]
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      // Signed in 
+      let user = userCredential.user;
+      console.log(user);
+      // ...
+    })
+    .catch((error) => {
+      let errorCode = error.code;
+      let errorMessage = error.message;
+      if (errorCode === 'auth/email-already-in-use'){
+        console.log("entra el if", errorMessage);
+      }
+      else {
+        console.log("eRROR CODE", errorCode);
+      }
+      // ..
+    });
+  // [END auth_signup_password]
+};
 
-/*firebase.auth().createUserWithEmailAndPassword(email, password)
-.then((userCredential) => {
-  // Signed in
-  let emailNewUser = document.getElementById('email');
-  var user = userCredential.user;
-  console.log(user);
-  // ...
-})
-.catch((error) => {
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // ..
-});*/
+//auth/invalid-email
+//auth/weak-password CONTRASEÑA DEBIL
