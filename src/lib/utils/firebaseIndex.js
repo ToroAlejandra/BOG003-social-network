@@ -1,4 +1,4 @@
-import { home } from "./view/templateHome.js";
+import { home } from "../view/templateHome.js";
 
 // Registro con Google
 export const loginGoogle = () => {
@@ -34,43 +34,27 @@ export const loginGoogle = () => {
       // ...
     });
 };
-export const sendLink = () => {
+export const sendLink = (user) => {
   // [START auth_send_email_verification]
   firebase
     .auth()
     .currentUser.sendEmailVerification()
     .then(() => {
-      console.log(firebase.auth().currentUser);
+      firebase.auth().currentUser.displayName = user;
+      console.log(user);
       // Email verification sent! // ...
     });
   // [END auth_send_email_verification]
-  console.log("...");
+  
 };
-//ingreso con correo y contraseña
+//registro de usuario con correo y contraseña
 export const signUpWithEmailPassword = (email, password) => {
   // [START auth_signup_password]
-  firebase
-    .auth()
-    .createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // Signed in
-      let user = userCredential.user;
-      console.log(user.emailVerified);
-      // ...
-    })
-    .catch((error) => {
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      if (errorCode === "auth/email-already-in-use") {
-        console.log("entra el if", errorMessage);
-      } else {
-        console.log("eRROR CODE", errorCode);
-      }
-      // ..
-    })
-    .then(() => {
-      sendLink();
-    });
+  return firebase.auth().createUserWithEmailAndPassword(email, password)
+    
+    /*.then(() => {
+      
+    });*/
 
   // [END auth_signup_password]
 };
@@ -82,8 +66,7 @@ export const getCurrentUser = () => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      var uid = user.uid;
-      console.log(user)
+      
       // ...
     } else {
       // User is signed out
@@ -92,22 +75,8 @@ export const getCurrentUser = () => {
   });
 };
 export const loginWithPasswordEmail = (email, password) => {
-  console.log('Ingreso al M',email);
-  firebase.auth().signInWithEmailAndPassword(email, password)
-  .then((userCredential) => {
-    // Signed in
-    var user = userCredential.user;
-    console.log('Usuario logueado',user);
-    if (user.emailVerified === true){
-      alert ('Correo OK');
-    }
-    else {
-      alert ('Debes Verificar tu correo');
-    }
-    // ...
-  })
-  .catch((error) => {
-    var errorCode = error.code;
-    var errorMessage = error.message;
-  });
+  return firebase.auth().signInWithEmailAndPassword(email, password)
+ 
 }; 
+
+
