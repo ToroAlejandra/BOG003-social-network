@@ -1,4 +1,4 @@
-import { loginGoogle, loginWithPasswordEmail} from '../index.js';
+import { loginGoogle, loginWithPasswordEmail} from '../utils/firebaseIndex.js';
 
 export const login = () => {
 
@@ -9,8 +9,9 @@ export const login = () => {
     <a href="#/signin">Registrate</a>
      <input type="email" id="loginEmail" placeholder="E-mail">
      <input type="password" name="" id="loginPass" placeholder="Contraseña">
-     <button id='loginEmailAndPass'href="#/home"> Login </button>
+     <button id='loginEmailAndPass'> Login </button>
      <button id='loginGoogle'> Login Google </button>
+     <h3 id='unverifiedEmail'></h3>
     `
   divLogin.innerHTML = viewLogin;
 
@@ -19,15 +20,39 @@ export const login = () => {
   btnGoogle.addEventListener("click", () => {
       loginGoogle();
   });
+
   const btnEmailAndPass = divLogin.querySelector('#loginEmailAndPass');
   btnEmailAndPass.addEventListener("click", () => {
     let userPassword = document.querySelector("#loginPass").value; 
     let userEmail = document.querySelector("#loginEmail").value;
-    console.log('Email');
-    loginWithPasswordEmail(userEmail,userPassword);
+    let loginWithPassEmail = loginWithPasswordEmail(userEmail,userPassword)
+    .then((res) => {
+      if (res.user.emailVerified){
+        window.location.hash = "#/home";
+        console.log(res.user.emailVerified);
+      } else {
+         document.querySelector("#unverifiedEmail").innerHTML = 'Verifica tu correo para poder ingresar';
+      }      
+    }) 
+    .catch((error) => {
+      const objectErrorLogin = {
+        'auth/wrong-password': 'Contraseña incorrecta',
+        'auth/too-many-requests' : 'Has excedido el número de intentos permitidos',
+        'auth/user-not-found': 'El usuario no existe, verifica tu correo',
+        'auth/invalid-email': 'Por favor ingresa un correo válido',
+        'auth/internal-error': 'Ha ocurrido un error inesperado, por favor intenta nuevamente'
+      };
+      let errorCode = error.code;
+      let errorMessage = error.message;
+
+      if (Object.keys(objectErrorLogin).includes(errorCode)){
+        document.querySelector("#unverifiedEmail").innerHTML = objectErrorLogin[errorCode] ;
+      } else {
+        document.querySelector("#unverifiedEmail").innerHTML = objectErrorLogin['auth/internal-error'] + " " + errorCode;
+      }
+  });
+
    }); 
-
-
   return divLogin;
 };
 
