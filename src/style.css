@@ -1,0 +1,118 @@
+@media screen and (min-width: 320px ) {
+ 
+  /*Pagina de Registro*/
+  .headSignin{
+      display: flex;
+      flex-direction:row;
+      align-items: center;
+      justify-content:space-evenly;
+
+  }
+  .divSignin h1 {
+    font-family: "Cookie", cursive;
+    font-size: 60px;
+    font-weight: normal;
+    color: rgb(106, 78, 166);
+    margin: 0;
+  }
+  svg{
+    width: 45px;
+    height: 45px;
+  }
+  .logo {
+       fill: rgb(106, 78, 166);    
+  }
+  .section-signin{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  }
+  .input-group{
+   width: 85%;
+
+  }
+  .input-group p{
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+     font-size: 10px;
+     font-weight: normal;
+     margin-bottom: 0;
+     margin-left: 5%;
+  }
+  .input-group input{
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    font-weight: normal;
+    padding-left: 5%;
+    padding-right: 5%;
+    border-radius: 25px;
+    border: solid rgba(242, 242, 242, 1);
+    background:rgba(242, 242, 242, 1);
+    width: 90%;
+    height: 26px;
+    margin-top: 5%; 
+  }
+  #date{
+      margin-top: 0;
+  }
+  .btn-register{
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 13px;
+    font-weight: bolder;
+    border: solid rgba(190, 182, 242, 0.9);
+    background: rgba(190, 182, 242, 0.9);  
+    border-radius: 25px;
+    width: 85%;
+    height: 26px;
+    margin-top: 5%;
+  }
+  .line{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      justify-content:space-evenly;
+  }
+  .line div{
+      border: 0.2px solid rgba(0, 0, 0, 0.6);
+      height: 0px;
+      width: 100px;      
+  }
+  
+  #signinGoogle, #loginGoogle{
+      width: 36px;
+      height: 36px;
+  }
+  .link-account{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content:space-evenly;
+      width: 80%;
+      font-family: 'Montserrat', sans-serif;
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 13px;
+      font-weight: bolder;
+  }
+
+  .logo-login{
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content:space-evenly;  
+    margin-top: 100px;
+    margin-bottom: 30px;
+  }
+  .logo-login svg{  
+      width: 66px;
+      height: 66px;
+  }
+
+
+
+  /* 
+    font-family: 'Cookie', cursive;*/
+}

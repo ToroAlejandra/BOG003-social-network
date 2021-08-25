@@ -1,3 +1,4 @@
+/** Crear div que contiene template de notFound*/
 export const nFound = () => {
 
     const divnFound = document.createElement('div');
