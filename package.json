@@ -34,5 +34,21 @@
   },
   "engines": {
     "node": ">=10"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "firebase": "^8.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tolozayurany/BOG003-social-network.git"
+  },
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/tolozayurany/BOG003-social-network/issues"
+  },
+  "homepage": "https://github.com/tolozayurany/BOG003-social-network#readme"
+
 }
