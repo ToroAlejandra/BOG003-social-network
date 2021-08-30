@@ -11,10 +11,10 @@ export const loginGoogle = () => {
 			let token = credential.accessToken;
 			// The signed-in user info.
 			let user = result.user;
-			console.log(user, "token", token);
+			console.log(user, 'token', token);
 			// ...
 			/** Actualizar perfil del usuario en firestore*/
-			setDataUser(user, user.displayName, "", "", "");
+			setDataUser(user, user.displayName, '', '', '');
 		})
 		.catch((error) => {
 			// Handle Errors here.
@@ -25,9 +25,9 @@ export const loginGoogle = () => {
 			// The firebase.auth.AuthCredential type that was used.
 			let credential = error.credential;
 			console.log(
-				"errorcredencial",
+				'errorcredencial',
 				credential,
-				"\n errorMessaage",
+				'\n errorMessaage',
 				errorMessage
 			);
 			// ...
@@ -36,7 +36,7 @@ export const loginGoogle = () => {
 /** Esta función permite crear los datos y enviar los datos a la colección de firestore*/
 export const setDataUser = (user, nameUser, userData, genderUser, dateUser) => {
 	const uid = user.uid;
-	db.collection("users")
+	db.collection('users')
 		.doc(uid)
 		.set({
 			name: nameUser,
@@ -45,10 +45,10 @@ export const setDataUser = (user, nameUser, userData, genderUser, dateUser) => {
 			date: dateUser,
 		})
 		.then(() => {
-			console.log("Document successfully written!");
+			console.log('Document successfully written!');
 		})
 		.catch((error) => {
-			console.error("Error writing document: ", error);
+			console.error('Error writing document: ', error);
 		});
 };
 /** Función para el envio de correo para verificacion de usuario*/
@@ -58,7 +58,7 @@ export const sendLink = (userName) => {
 	/** Actualiza el nombre de ususario con el que se proporciona en el momento del registro*/
 	user.updateProfile({
 		displayName: userName,
-		photoURL: "https://example.com/jane-q-user/profile.jpg",
+		photoURL: 'https://example.com/jane-q-user/profile.jpg',
 	})
 		.then(() => {
 			// Update successful
@@ -93,14 +93,14 @@ export const loginWithPasswordEmail = (email, password) => {
 export const getCurrentUser = () => {
 	firebase.auth().onAuthStateChanged((user) => {
 		if (user) {
-			window.location.hash = "#/home";
+			window.location.hash = '#/home';
 			// User is signed in, see docs for a list of available properties
 			// https://firebase.google.com/docs/reference/js/firebase.User
 			let uid = user.uid;
-			console.log(user, "El usuario está activo");
+			console.log(user, 'El usuario está activo');
 			// ...
 		} else {
-			console.log(user, "No hay un usuario activo")
+			console.log(user, 'No hay un usuario activo')
 			// User is signed out
 			// ...
 		}
