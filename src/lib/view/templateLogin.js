@@ -10,14 +10,13 @@ export const login = () => {
   </div>
     <div class='section-login'>    
      <div class='input-group'>
-      <input type='email' id='loginEmail' placeholder='E-mail'>
-      <div id='msj-error-email-login' class='msj-error-date-none'>
-       <img src= './images/bx-x-circle.svg'></img><p id='error-email-login'></p>
-      </div> 
+      <input type='email' id='loginEmail' placeholder='E-mail'> 
       <input type='password' name='' id='loginPass' placeholder='Contraseña'>
      </div>
      <button class='btn-register' id='loginEmailAndPass'> Inicia sesión </button>
-     <h3 id='unverifiedEmail'></h3>
+     <div class= "msj-error-date-none" id='mesage-error-login'>
+     <img class= 'bx-errorMesage' src= './images/error_outline.png'></img><p id='unverifiedEmail'></p>
+     </div>
      <div class='line'>
         <div class='line-one'>
         </div>
@@ -52,6 +51,8 @@ export const login = () => {
          window.location.hash = '#/home';
         } else {
           /**Si el email no es verificado se envia mensaje de aviso usuario para que verifique el correo */
+          document.querySelector('#mesage-error-login').classList.remove('msj-error-date-none');
+          document.querySelector('#mesage-error-login').classList.add('msj-error-date-show');
           document.querySelector('#unverifiedEmail').innerHTML = 'Verifica tu correo para poder ingresar';
         }
       })
@@ -70,14 +71,19 @@ export const login = () => {
         let errorMessage = error.message;
         /** Se valida el error segun el objeto y se envia mensaje al usuario */
         if (Object.keys(objectErrorLogin).includes(errorCode)) {
-          
+          document.querySelector('#mesage-error-login').classList.remove('msj-error-date-none');
+          document.querySelector('#mesage-error-login').classList.add('msj-error-date-show');
           document.querySelector('#unverifiedEmail').innerHTML = objectErrorLogin[errorCode];
+
         } else {
           /** Si no se encuentra el error en el objeto y se envia un mensaje por defecto */
-          document.querySelector('#unverifiedEmail').innerHTML =
-            objectErrorLogin['auth/internal-error'] + ' ' + errorCode;
+          document.querySelector('#mesage-error-login').classList.remove('msj-error-date-none');
+          document.querySelector('#mesage-error-login').classList.add('msj-error-date-show');
+          document.querySelector('#unverifiedEmail').innerHTML = objectErrorLogin['auth/internal-error'] + ' ' + errorCode;
         }
       });
+      document.querySelector('#mesage-error-login').classList.add('msj-error-date-none');
+      document.querySelector('#mesage-error-login').classList.remove('msj-error-date-show');
       document.querySelector('#loginPass').value = '';
       document.querySelector('#loginEmail').value = '';
   });
