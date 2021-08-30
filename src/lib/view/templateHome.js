@@ -5,7 +5,7 @@ export const home = () => {
   const divHome = document.createElement('div');
   const viewHome =
     `<h1>Home</h1>
-    <button class="btn-register" id='logOut'> Cierra sesión </button>
+    <button class='btn-register' id='logOut'> Cierra sesión </button>
     `
   divHome.innerHTML = viewHome;
 
