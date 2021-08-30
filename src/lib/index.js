@@ -1,16 +1,9 @@
-
 export const validDate = (date) => {
+  const currentDate = new Date();
+  let currentYear = currentDate.getFullYear();
+  const yearOfBirth = date.split('-');
 
-    let currentDate = new Date();
-    let currentYear = currentDate.getFullYear();
-    let yearOfBirth = date.split('-');
-
-    currentYear = currentYear - parseInt(yearOfBirth[0]);
-    console.log(currentYear);
-    if(currentYear>=100 || currentYear < 12){
-        return true;
-
-    } else {
-        return false;
-    }
-} 
+  currentYear -= parseInt(yearOfBirth[0], 10);
+  currentYear = currentYear >= 100 || currentYear < 12 ? true : false;
+  return currentYear;
+};
