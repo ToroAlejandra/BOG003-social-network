@@ -23,7 +23,12 @@ export const signin = () => {
         </div>
         <input type='text' id='inputName' placeholder='Nombre' required>
         <input type='text' id='inputNameUser' placeholder='Nombre de usuario' required>
-        <input type='text' id='gender' placeholder='Género'>
+        <select id='gender'>
+        <option disabled> Selecciona el género </option>
+        <option>Femenino</option>
+        <option>Masculino</option>
+        <option>GenderQueer</option>
+        </select>
         <p> Fecha de nacimiento</p><input type='date' id='date'>
         <div id='msj-error-date' class='msj-error-date-none'>
           <img src= './images/bx-x-circle.svg'></img><p id='errorDate'> </p>

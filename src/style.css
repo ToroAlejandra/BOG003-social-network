@@ -66,15 +66,15 @@
     margin-top: 3%;
   }
   .bx-errorMesage{
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
   }
  #errorDate, #error-email, #errorPassword, #errorPasswordConfirm{
   margin: 0;
   font-weight: bolder;
-  color: rgb(199, 46, 46);
+  color: rgb(199, 0, 0);
 }
-#errorMesageSignin{
+#errorMesageSignin, #unverifiedEmail{
   font-family: "Montserrat", sans-serif;
   font-size: 13px ;
   margin: 0;
