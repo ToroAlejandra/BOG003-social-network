@@ -1,9 +1,9 @@
-import { getCurrentUser, loginGoogle, loginWithPasswordEmail, setPersistence} from '../utils/firebaseIndex.js';
-/** Crear div que contiene template de login*/
+import { loginGoogle, loginWithPasswordEmail, setPersistence } from '../utils/firebaseIndex.js';
+/** Crear div que contiene template de login */
 export const login = () => {
   const divLogin = document.createElement('div');
   divLogin.setAttribute('class', 'divLogin');
-  let viewLogin = `
+  const viewLogin = `
   <div class='logo-login'>
   <h1>Visibles</h1>
   <img class='logo' src='./images/protest.svg'></img>
@@ -26,13 +26,21 @@ export const login = () => {
      </div>
      <img src= './images/logo-google.png' id='loginGoogle'></img>
         <div class='link-account'>
-         <p> ¿No tienes cuenta? </p><a href='#/signin'>Regístrate</a>
+         <p> ¿No tienes cuenta? </p><a id="signinHref" href='#/signin'>Regístrate</a>
     </div>
     </div> 
     `;
   divLogin.innerHTML = viewLogin;
-  //probar si el usuari esta activo
- // getCurrentUser();
+  divLogin.querySelector('#signinHref').addEventListener('click', () => {
+    const errorElementsLogin = document.querySelectorAll('.msj-error-date-show');
+    errorElementsLogin.forEach((e) => {
+      e.classList.add('msj-error-date-none');
+      e.classList.remove('msj-error-date-show');
+    });
+    document.querySelector('#loginPass').value = '';
+    document.querySelector('#loginEmail').value = '';
+  });
+
   setPersistence();
   const btnGoogle = divLogin.querySelector('#loginGoogle');
   btnGoogle.addEventListener('click', () => {
@@ -41,24 +49,26 @@ export const login = () => {
   /** Este evento ejecuta el ingreso del usuario con correo y contraseña */
   const btnEmailAndPass = divLogin.querySelector('#loginEmailAndPass');
   btnEmailAndPass.addEventListener('click', () => {
-    let userPassword = document.querySelector('#loginPass').value;
-    let userEmail = document.querySelector('#loginEmail').value;
-    let loginWithPassEmail = loginWithPasswordEmail(userEmail, userPassword)
+    const userPassword = document.querySelector('#loginPass').value;
+    const userEmail = document.querySelector('#loginEmail').value;
+    loginWithPasswordEmail(userEmail, userPassword)
       .then((res) => {
-        /**res(response) hace referencia a la respuesta de la promesa */
-        /**Si el email fue verificado el usuario ingresa a home */
+        /** res(response) hace referencia a la respuesta de la promesa */
+        /** Si el email fue verificado el usuario ingresa a home */
         if (res.user.emailVerified) {
-         window.location.hash = '#/home';
+          window.location.hash = '#/home';
+          document.querySelector('#loginPass').value = '';
+          document.querySelector('#loginEmail').value = '';
         } else {
-          /**Si el email no es verificado se envia mensaje de aviso usuario para que verifique el correo */
+          /** Si el email no es verificado se envia mensaje de aviso usuario para verificación */
           document.querySelector('#mesage-error-login').classList.remove('msj-error-date-none');
           document.querySelector('#mesage-error-login').classList.add('msj-error-date-show');
           document.querySelector('#unverifiedEmail').innerHTML = 'Verifica tu correo para poder ingresar';
         }
       })
-      /**Objeto de errores de validación del login */
+      /** Objeto de errores de validación del login */
       .catch((error) => {
-        let objectErrorLogin = {
+        const objectErrorLogin = {
           'auth/wrong-password': 'Contraseña incorrecta',
           'auth/too-many-requests':
             'Has excedido el número de intentos permitidos',
@@ -67,14 +77,12 @@ export const login = () => {
           'auth/internal-error':
             'Ha ocurrido un error inesperado, por favor intenta nuevamente',
         };
-        let errorCode = error.code;
-        let errorMessage = error.message;
+        const errorCode = error.code;
         /** Se valida el error segun el objeto y se envia mensaje al usuario */
         if (Object.keys(objectErrorLogin).includes(errorCode)) {
           document.querySelector('#mesage-error-login').classList.remove('msj-error-date-none');
           document.querySelector('#mesage-error-login').classList.add('msj-error-date-show');
           document.querySelector('#unverifiedEmail').innerHTML = objectErrorLogin[errorCode];
-
         } else {
           /** Si no se encuentra el error en el objeto y se envia un mensaje por defecto */
           document.querySelector('#mesage-error-login').classList.remove('msj-error-date-none');
@@ -82,10 +90,8 @@ export const login = () => {
           document.querySelector('#unverifiedEmail').innerHTML = objectErrorLogin['auth/internal-error'] + ' ' + errorCode;
         }
       });
-      document.querySelector('#mesage-error-login').classList.add('msj-error-date-none');
-      document.querySelector('#mesage-error-login').classList.remove('msj-error-date-show');
-      document.querySelector('#loginPass').value = '';
-      document.querySelector('#loginEmail').value = '';
+    document.querySelector('#mesage-error-login').classList.add('msj-error-date-none');
+    document.querySelector('#mesage-error-login').classList.remove('msj-error-date-show');
   });
   return divLogin;
 };
