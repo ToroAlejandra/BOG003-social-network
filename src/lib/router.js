@@ -6,14 +6,15 @@ import { home } from './view/templateHome.js';
 const containerRoot = document.getElementById('root');
 /** Objeto que contiene los template segun el hash */
 const objectRoute = {
-  '#/': login(),
-  '#/signin': signin(),
-  '#/home': home(),
+  '#/': login,
+  '#/signin': signin,
+  '#/home': home,
 };
 /** añadir y mostrar el template al contenedor general */
 const showTemplate = (hash) => {
   containerRoot.innerHTML = '';
-  containerRoot.appendChild(objectRoute[hash]);
+  const component = objectRoute[hash]();
+  containerRoot.appendChild(component);
 };
 /** Se muestra el template si la ruta esta dentro del objeto */
 export const changeRoute = (hash) => {

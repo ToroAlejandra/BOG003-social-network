@@ -31,16 +31,6 @@ export const login = () => {
     </div> 
     `;
   divLogin.innerHTML = viewLogin;
-  divLogin.querySelector('#signinHref').addEventListener('click', () => {
-    const errorElementsLogin = document.querySelectorAll('.msj-error-date-show');
-    errorElementsLogin.forEach((e) => {
-      e.classList.add('msj-error-date-none');
-      e.classList.remove('msj-error-date-show');
-    });
-    document.querySelector('#loginPass').value = '';
-    document.querySelector('#loginEmail').value = '';
-  });
-
   setPersistence();
   const btnGoogle = divLogin.querySelector('#loginGoogle');
   btnGoogle.addEventListener('click', () => {
