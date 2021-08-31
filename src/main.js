@@ -1,5 +1,4 @@
 // Este es el punto de entrada de tu aplicacion
-
 import { login } from './lib/view/templateLogin.js';
 import { changeRoute } from './lib/router.js';
 

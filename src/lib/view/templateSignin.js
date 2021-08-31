@@ -143,7 +143,6 @@ export const signin = () => {
           })
           .catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
             /** Objeto de errores de registro */
             const objectErrorSignin = {
               'auth/weak-password':
@@ -181,7 +180,7 @@ export const signin = () => {
               document.querySelector('#msj-error-default').classList.add('msj-error-date-show');
               document.querySelector('#msj-error-default').classList.remove('msj-error-date-none');
               /** Error por defecto en caso de que no sea ninguno de los incluidos en el objeto */
-              document.querySelector('#errorMesageSignin').innerHTML = objectErrorSignin['auth/internal-error'] + ' ' + errorCode + ' ' + errorMessage;
+              document.querySelector('#errorMesageSignin').innerHTML = objectErrorSignin['auth/internal-error'];
             }
             // ..
           });
