@@ -87,7 +87,7 @@ export const login = () => {
           /** Si no se encuentra el error en el objeto y se envia un mensaje por defecto */
           document.querySelector('#mesage-error-login').classList.remove('msj-error-date-none');
           document.querySelector('#mesage-error-login').classList.add('msj-error-date-show');
-          document.querySelector('#unverifiedEmail').innerHTML = objectErrorLogin['auth/internal-error'] + ' ' + errorCode;
+          document.querySelector('#unverifiedEmail').innerHTML = objectErrorLogin['auth/internal-error'];
         }
       });
     document.querySelector('#mesage-error-login').classList.add('msj-error-date-none');

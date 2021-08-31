@@ -19,8 +19,7 @@ const showTemplate = (hash) => {
 export const changeRoute = (hash) => {
   if (Object.keys(objectRoute).includes(hash)) {
     return showTemplate(hash);
-  } else { /** Si la ruta no esta definida en el objeto mostrar el template 404 not found */
-    containerRoot.innerHTML = '';
-    return containerRoot.appendChild(nFound());
-  }
+  } /** Si la ruta no esta definida en el objeto mostrar el template 404 not found */
+  containerRoot.innerHTML = '';
+  return containerRoot.appendChild(nFound());
 };
