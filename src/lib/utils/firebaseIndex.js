@@ -10,7 +10,7 @@ export const setDataUser = (user, nameUser, userData, genderUser, dateUser) => {
       gender: genderUser,
       date: dateUser,
     })
-    .then(() => {})
+    .then(() => { })
     .catch((error) => error);
 };
 
@@ -27,6 +27,7 @@ export const loginGoogle = () => {
       // const token = credential.accessToken;
       // The signed-in user info.
       const user = result.user;
+      window.location.hash = '#/home';
       // ...
       /** Actualizar perfil del usuario en firestore */
       setDataUser(user, user.displayName, '', '', '');
@@ -78,6 +79,7 @@ export const signUpWithEmailPassword = (email, password) => firebase
 /** Ingreso de usuario con correo y contraseña */
 export const loginWithPasswordEmail = (email, password) => firebase
   .auth().signInWithEmailAndPassword(email, password);
+
 export const getCurrentUser = () => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
