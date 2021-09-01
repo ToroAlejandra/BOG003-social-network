@@ -76,16 +76,6 @@ export const signin = () => {
     document.querySelector('#inputNameUser').value = '';
   };
 
-  /** Evento click en "loginHref" para borrar errores que salen en el template signin */
-  divSignin.querySelector('#loginHref').addEventListener('click', () => {
-    const errorElements = document.querySelectorAll('.msj-error-date-show');
-    errorElements.forEach((e) => {
-      e.classList.add('msj-error-date-none');
-      e.classList.remove('msj-error-date-show');
-    });
-    clearInput();
-  });
-
   const btnSigninGoogle = divSignin.querySelector('#signinGoogle');
   btnSigninGoogle.addEventListener('click', () => {
     loginGoogle();
