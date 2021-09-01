@@ -1,60 +1,73 @@
 // eslint-disable-next-line
 /* global firebase */
 // importamos la funcion que vamos a testear
-// import { createUserWithEmailAndPassword } from '../src/lib/utils/firebaseIndex.js';
+import { signUpWithEmailPassword, loginGoogle, signOut } from '../src/lib/utils/firebaseIndex.js';
 
 const firebasemock = require('firebase-mock');
 
-const mockauth = new firebasemock.MockAuthentication();
-/* const mockfirestore = new firebasemock.MockFirestore();
-const mocksdk = new firebasemock.MockFirebaseSdk(
-  // use null if your code does not use AUTHENTICATION
+const mockauth = new firebasemock.MockFirebase();
+const mockdatabase = new firebasemock.MockFirebase();
+mockdatabase.autoFlush();
+mockauth.autoFlush();
+
+global.firebase = firebasemock.MockFirebaseSdk(
+  (path) => (path ? mockdatabase.child(path) : mockdatabase),
   () => mockauth,
-  // use null if your code does not use FIRESTORE
-  () => mockfirestore,
 );
 
-/* const users = {
-  create: (email, password) => mocksdk.auth().signUpWithEmailPassword(email, password),
-};
-
-users.create({
-  email: 'ben@example.com',
-  password: 'examplePass',
-});
-mocksdk.auth().flush();
-
- mocksdk.auth().createUserWithEmailAndPassword('ben@example.com', 'examplePass').then((user) => {
- console.assert(user, 'ben was created');
-});
-
-// const register = ['tefyrabih@gmail.com', '123456'];
-describe('Sign up with email password', () => {
-  it('show return a function ', () => {
-    expect(typeof signUpWithEmailPassword).toBe('function');
+describe('Login with Google ', () => {
+  it('LoginGoogle is a function', () => {
+    expect(typeof loginGoogle).toBe('function');
   });
-  it('show return a object', () => {
-    mocksdk.auth().createUserWithEmailAndPassword('ben@example.com', 'examplePass').then(() => {
-      expect('ben@example.com').toBe('ben@example.com');
+  it('Login with google', () => {
+    loginGoogle('ben@example.com');
+    firebase.auth().signInWithPopup('ben@example.com').then((result) => {
+      expect(result.user.email).toBe('ben@example.com');
     });
   });
-}); */
-const promiseTobe = {
-  _id: 0,
-  _label: undefined,
-  _result: {
-    displayName: undefined, email: 'new12@new1.com', emailVerified: false, phoneNumber: undefined, photoURL: undefined, providerData: [], uid: 'simplelogin:1',
-  },
-  _state: 1,
-  _subscribers: [],
-};
-describe('#createUserWithEmailAndPassword', () => {
+});
+
+describe('Sign Up with email and password ', () => {
+  it('signUpWithEmailPassword is a function', () => {
+    expect(typeof signUpWithEmailPassword).toBe('function');
+  });
   it('creates a new user', () => {
-    const promise = mockauth.createUserWithEmailAndPassword('new12@new1.com', 'new1');
-    mockauth.flush();
+    const promise = signUpWithEmailPassword('new1@new1.com', 'new1');
     return Promise.all([
-      expect(promiseTobe).toBe(promise),
-      // expect(promise.email).toBe('email', 'new1@new1.com'),
+      // eslint-disable-next-line
+      expect(promise['_result']).toHaveProperty('uid', 'simplelogin:1'),
+      // eslint-disable-next-line
+      expect(promise['_result']).toHaveProperty('email', 'new1@new1.com'),
     ]);
+  });
+  it('Sign up with email and password', () => {
+    signUpWithEmailPassword('ben@example.com', 'example123');
+    firebase.auth().createUserWithEmailAndPassword('ben@example.com', 'example123').then((res) => {
+      // eslint-disable-next-line
+      expect(res.email).toBe('ben@example.com');
+    });
+  });
+  it('Error in sign up with email and password', () => {
+    signUpWithEmailPassword(' ', 'example123');
+    firebase.auth().createUserWithEmailAndPassword(' ', 'example123').catch((res) => {
+      // eslint-disable-next-line
+      expect(res['_result']).toHaveProperty('email', undefined);
+    });
+  });
+});
+
+describe('Log Out', () => {
+  it('signOut is a function', () => {
+    expect(typeof signOut).toBe('function');
+  });
+  it('Log out for the user', () => {
+    signOut();
+    firebase.auth().signOut().then((res) => {
+      // eslint-disable-next-line
+      expect(res['_result']).toHaveProperty('email', undefined);
+    }).catch((error) => {
+      // eslint-disable-next-line
+      expect(error['_result']).toHaveProperty('email', undefined);
+    });
   });
 });
