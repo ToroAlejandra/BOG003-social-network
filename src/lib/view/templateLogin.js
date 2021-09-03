@@ -1,4 +1,6 @@
-import { loginGoogle, loginWithPasswordEmail, setPersistence } from '../utils/firebaseIndex.js';
+import {
+  getCurrentUser, loginGoogle, loginWithPasswordEmail, setPersistence,
+} from '../utils/firebaseIndex.js';
 /** Crear div que contiene template de login */
 export const login = () => {
   const divLogin = document.createElement('div');
@@ -32,6 +34,7 @@ export const login = () => {
     `;
   divLogin.innerHTML = viewLogin;
   setPersistence();
+  getCurrentUser();
   const btnGoogle = divLogin.querySelector('#loginGoogle');
   btnGoogle.addEventListener('click', () => {
     loginGoogle();
