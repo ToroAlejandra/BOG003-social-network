@@ -10,39 +10,25 @@ export const setDataUser = (user, nameUser, userData, genderUser, dateUser) => {
       gender: genderUser,
       date: dateUser,
     })
-    .then(() => { })
+    .then(() => {})
     .catch((error) => error);
 };
 
 /** Registro con cuenta de Google */
 export const loginGoogle = () => {
   const provider = new firebase.auth.GoogleAuthProvider();
-  firebase
+  return firebase
     .auth()
     .signInWithPopup(provider)
     .then((result) => {
       /** @type {firebase.auth.OAuthCredential} */
-      // const credential = result.credential;
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      // const token = credential.accessToken;
-      // The signed-in user info.
       const user = result.user;
-      window.location.hash = '#/home';
-      // ...
       /** Actualizar perfil del usuario en firestore */
       setDataUser(user, user.displayName, '', '', '');
+      window.location.hash = '#/home';
+      return window.location.hash;
     })
     .catch((error) => error);
-  // {
-  // Handle Errors here.
-  // const errorCode = error.code;
-  // const errorMessage = error.message;
-  // The email of the user's account used.
-  // const email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  // const credential = error.credential;
-  // ...
-  // });
 };
 
 /** Función para el envio de correo para verificacion de usuario */
@@ -74,24 +60,28 @@ export const sendLink = (userName) => {
   // });
 };
 /** registro de usuario con correo y contraseña */
-export const signUpWithEmailPassword = (email, password) => firebase
-  .auth().createUserWithEmailAndPassword(email, password);
+export const signUpWithEmailPassword = (email, password) => {
+  const register = firebase
+    .auth().createUserWithEmailAndPassword(email, password);
+  return register;
+};
 /** Ingreso de usuario con correo y contraseña */
-export const loginWithPasswordEmail = (email, password) => firebase
-  .auth().signInWithEmailAndPassword(email, password);
+export const loginWithPasswordEmail = (email, password) => {
+  const login = firebase
+    .auth().signInWithEmailAndPassword(email, password);
+  return login;
+};
 
 export const getCurrentUser = () => {
   firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
+    console.log(user);
+    if (user.emailVerified) {
       window.location.hash = '#/home';
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/firebase.User
-      // user.uid;
-      // ...
     } else {
-      // User is signed out
-      // ...
+      window.location.hash = '#/';
     }
+    console.log(window.location.hash);
+    return window.location.hash;
   });
 };
 
@@ -104,11 +94,11 @@ export const setPersistence = () => {
     .catch((error) => error);
 };
 export const signOut = () => {
-  firebase
+  const out = firebase
     .auth()
     .signOut()
     .then(() => {
       // Sign-out successful.
-    })
-    .catch((error) => error);
+    });
+  return out;
 };
