@@ -21,10 +21,6 @@ global.firebase = firebasemock.MockFirebaseSdk(
   () => mockauth,
 );
 
-global.window = {
-  location: { hash: '' },
-};
-
 describe('setDataUser', () => {
   it('setDataUser is a function', () => {
     expect(typeof setDataUser).toBe('function');
@@ -38,6 +34,11 @@ describe('setDataUser', () => {
 describe('Login with Google ', () => {
   it('LoginGoogle is a function', () => {
     expect(typeof loginGoogle).toBe('function');
+  });
+  it('Login Google ', () => {
+    loginGoogle().then((result) => {
+      expect(typeof result).toBe('object');
+    });
   });
 });
 
@@ -72,10 +73,8 @@ describe('getCurrentUser', () => {
     expect(typeof getCurrentUser).toBe('function');
   });
   it('should get current User', () => {
-    getCurrentUser('example@gmail.com', 'pass1234');
-    firebase.auth().onAuthStateChanged((user) => {
-      expect((user.emailVerified)).toBe('#/home');
-    });
+    getCurrentUser();
+    expect((window.location.hash)).toBe('#/home');
   });
 });
 

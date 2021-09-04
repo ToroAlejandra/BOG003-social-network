@@ -1,5 +1,5 @@
 import {
-  getCurrentUser, loginGoogle, loginWithPasswordEmail, setPersistence,
+  loginGoogle, loginWithPasswordEmail, setPersistence, getCurrentUser,
 } from '../utils/firebaseIndex.js';
 /** Crear div que contiene template de login */
 export const login = () => {
@@ -31,6 +31,7 @@ export const login = () => {
          <p> ¿No tienes cuenta? </p><a id="signinHref" href='#/signin'>Regístrate</a>
     </div>
     </div> 
+    <footer class="foot" > <p class="foot" >&copy Visibles from &lt; L &gt;</p> </footer>
     `;
   divLogin.innerHTML = viewLogin;
   setPersistence();

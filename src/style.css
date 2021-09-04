@@ -1,4 +1,8 @@
 @media screen and (min-width: 320px) {
+  * {
+    margin: 0;
+    padding: 0;
+  }
   /*Pagina de Registro*/
   .headSignin {
     display: flex;
@@ -45,6 +49,10 @@
     width: 90%;
     height: 26px;
     margin-top: 5%;
+  }
+
+  .input-group input:focus {
+    outline: none;
   }
   
   #gender select{
@@ -98,8 +106,6 @@
   font-weight: bolder;
   color: #555;
 }
-
-
 
 .btn-register {
     font-family: "Montserrat", sans-serif;
@@ -197,6 +203,171 @@
     height: 36px;
     margin-right: 10px;
   }
+
+  .content-header{
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+  }  
+
+  .header-home{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 15px 10px 10px 10px;
+    font-family: "Montserrat", sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    font-weight: bolder;
+    border-bottom: 0.2px solid rgba(110, 110, 110, 0.253);
+    width: 80%;
+  }
+
+  .header-home #photo-user{
+    padding-right: 8px;
+  }
+
+  .header-home p{
+    margin: 0;
+  }
+
+  .content-menu{
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+  }
+  .nav-menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px; 
+    border-top: 0.2px solid rgba(110, 110, 110, 0.253); 
+    width: 80%;
+  }
+
+  .background-modal-none{
+    display: none;
+  }
+
+  .background-modal-show{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: #c4c4c450;
+    backdrop-filter: blur(1px);
+  }
+
+  .post-modal{
+    display: flex;
+    width: 85%;
+    max-width: 350px;
+    height: 40%;
+    max-height: 300px;
+    transform: translate(0px, -20%);
+    background-color: #ffffff;
+    border-radius: 15px;
+    justify-content: center;
+  }
+
+  .content-modal{
+    display: flex;
+    padding: 10px 0 10px 0;
+    width: 78%;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-family: "Montserrat", sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+  }
+
+  .header-modal{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .user-modal{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .user-modal p{
+    margin: 0;
+    font-weight: bolder;
+    vertical-align: text-bottom;
+  }
+
+  .user-modal img{
+    padding-right: 8px;
+  }
+
+  .content-input{
+    display: flex;
+    width: 100%;
+    height: 60%;
+    border-radius: 10px;
+    border: 0.5px solid rgba(110, 110, 110, 0.507);
+    justify-content: center;
+    align-items: center;
+  } 
+
+  .input-post{
+    width: 95%;
+    height: 90%;
+    border: none;
+    font-family: "Montserrat", sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+  } 
+
+  .input-post-error{
+    display: flex;
+    width: 100%;
+    height: 60%;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    border: 0.5px solid rgb(199, 0, 0);
+    
+  }
+
+  .input-post-error .input-post::placeholder{
+    color:rgb(199, 0, 0);
+  }
+
+ .input-post:focus {
+    outline: none;
+  } 
+  .btn-content{
+    display: flex;
+    justify-content: flex-end;
+  }
+  .btn-post {
+    font-family: "Montserrat", sans-serif;
+    color: white;
+    font-size: 12px;
+    font-weight: bolder;
+    background-color: #9f84d9;
+    border-radius: 25px;
+    border: solid #9f84d9;
+    width: 86px;
+    height: 24px;
+    left: 0;
+  }
+
   .foot{
     display: flex;
     font-family: "Montserrat", sans-serif;

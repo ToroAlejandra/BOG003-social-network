@@ -10,8 +10,8 @@ export const setDataUser = (user, nameUser, userData, genderUser, dateUser) => {
       gender: genderUser,
       date: dateUser,
     })
-    .then(() => {})
-    .catch((error) => error);
+    .then(() => { });
+  // .catch((error) => error);
 };
 
 /** Registro con cuenta de Google */
@@ -59,12 +59,13 @@ export const sendLink = (userName) => {
   // ...
   // });
 };
-/** registro de usuario con correo y contraseña */
+/** Registro de usuario con correo y contraseña */
 export const signUpWithEmailPassword = (email, password) => {
   const register = firebase
     .auth().createUserWithEmailAndPassword(email, password);
   return register;
 };
+
 /** Ingreso de usuario con correo y contraseña */
 export const loginWithPasswordEmail = (email, password) => {
   const login = firebase
@@ -72,18 +73,16 @@ export const loginWithPasswordEmail = (email, password) => {
   return login;
 };
 
-export const getCurrentUser = () => {
-  firebase.auth().onAuthStateChanged((user) => {
-    console.log(user);
-    if (user.emailVerified) {
-      window.location.hash = '#/home';
-    } else {
-      window.location.hash = '#/';
+export const getCurrentUser = () => firebase
+  .auth().onAuthStateChanged((user) => {
+    if (user) {
+      if (user.emailVerified) {
+        window.location.hash = '#/home';
+      } else {
+        window.location.hash = '#/';
+      }
     }
-    console.log(window.location.hash);
-    return window.location.hash;
   });
-};
 
 export const setPersistence = () => {
   firebase
