@@ -1,4 +1,4 @@
-import { signOut, setPost, dataPost } from '../utils/firebaseIndex.js';
+import { signOut, addPost, dataPost } from '../utils/firebaseIndex.js';
 
 /** Crear div que contiene template de home */
 export const home = () => {
@@ -22,7 +22,7 @@ export const home = () => {
         <img src= './images/bx-log-out.svg' class='menu-option' id='log-out'></img>
       </div>
     </div>
-
+  </div>
     <div class= 'background-modal-none' id ='modal'>
       <div class= 'post-modal'>
         <div class= 'content-modal'>
@@ -42,7 +42,7 @@ export const home = () => {
         </div>
       </div>
     </div>
-  </div>
+  
     `;
   divHome.innerHTML = viewHome;
 
@@ -76,12 +76,14 @@ export const home = () => {
   btnNewPost.addEventListener('click', () => {
     const divFeedPost = document.querySelector('#feed-post');
     const divNewPost = document.createElement('div');
+
+    divNewPost.setAttribute('class', 'div-new-post');
     let textPost = document.createElement('p');
+    let textPostContent = document.createElement('p');
+    textPostContent.setAttribute('id', 'text-post-content')
     textPost = document.querySelector('#text-post').value;
     textPost = textPost.trim();
-    divNewPost.innerHTML = textPost;
-    divFeedPost.appendChild(divNewPost);
-    
+
     if (textPost === '') {
       let inputText = document.querySelector('#text-post');
       inputText.placeholder = 'No puedes ingresar un campo vacío';
@@ -96,42 +98,71 @@ export const home = () => {
       const divModalClose = document.querySelector('#modal');
       divModalClose.classList.add('background-modal-none');
       divModalClose.classList.remove('background-modal-show');
+      window.location.hash = '#/home';
+      addPost(textPost, 1);
+      setTimeout(() => {
+        currentData();
+      }, 300)
     }
-    document.querySelector('#text-post').value='';
-    setPost( textPost, 1 );
-    //console.log(dataPost()); 
+    document.querySelector('#text-post').value = '';
+    // window.location.reload()
   });
+
+  const nameCurrentUser = () => {
+    const nameUser = firebase.auth().currentUser.displayName;
+    if (nameUser) {
+      document.querySelector('#header-user-post').textContent = nameUser;
+      document.querySelector('#header-user').textContent = nameUser;
+
+    }
+  };
+  setTimeout(() => {
+    nameCurrentUser();
+  }, 800)
+
+  
+
+  const currentData = () => {
+    document.querySelector('#feed-post').innerHTML='';
+    dataPost().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        // console.log(doc.id, " => ", doc.data());
+        let divFeedPost = document.querySelector('#feed-post');
+
+        const divNewPost = document.createElement('div');
+        const divHeaderPost = document.createElement('div');
+        const photoUser = document.createElement('img');
+        const divInfoUser = document.createElement('div');
+        let namePost = document.createElement('p');
+        let textPost = document.createElement('p');
+        divInfoUser.setAttribute('class', 'div-info-user');
+        divHeaderPost.setAttribute('class', 'div-header-post');
+        divNewPost.setAttribute('id', 'div-new-post');
+        photoUser.src = './images/bxs-face.svg';
+        textPost.textContent = doc.data().post;
+        console.log(doc.id);
+        doc.data().userId.get().then((userDoc) => {
+          console.log(userDoc.data());
+          namePost.textContent = userDoc.data().name;
+          divInfoUser.appendChild(photoUser);
+          divInfoUser.appendChild(namePost);
+          divHeaderPost.appendChild(divInfoUser);
+          divNewPost.appendChild(divHeaderPost);
+          divNewPost.appendChild(textPost);
+          divFeedPost.appendChild(divNewPost);
+        })
+      });
+    })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }
+  setTimeout(() => {
+    currentData();
+  }, 300)
+
+  
+
   return divHome;
 };
-
-const nameCurrentUser = () => { firebase
-  .auth().onAuthStateChanged((user) => {
-    document.querySelector('#header-user-post').textContent = user.displayName; 
-    document.querySelector('#header-user').textContent = user.displayName;
-     }
-     )};
-
-nameCurrentUser();
-
-const currentData = () => {
-  const divFeedPost = document.querySelector('#feed-post');
-  dataPost().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-     // console.log(doc.id, " => ", doc.data());
-      const divNewPost = document.createElement('div');
-      divNewPost.setAttribute('id', 'div-new-post');
-      let namePost = document.createElement('p');
-      let textPost = document.createElement('p');
-      textPost.textContent = doc.data().post;
-      namePost.textContent = doc.data().name;
-      divNewPost.appendChild(namePost);
-      divNewPost.appendChild(textPost);
-      document.querySelector('#feed-post').appendChild(divNewPost);
-    });
-  })
-.catch((error) => {
-  console.log("Error getting documents: ", error);
-});
-}
-currentData();

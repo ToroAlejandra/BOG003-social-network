@@ -101,24 +101,24 @@ export const signOut = () => {
     });
   return out;
 };
-export const setPost = ( currentPost, numLikes ) => {
+export const addPost = ( currentPost, numLikes ) => {
   const user = firebase.auth().currentUser;
   const uid = user.uid;
   const docRef = db.collection('users').doc(uid);
   let nickName;  
 docRef.get().then((doc) => {
   if (doc.exists) {
-    if (doc.data().userName){
+    /* if (doc.data().userName){
       nickName = doc.data().userName; 
     }else {
       nickName = doc.data().name;  
-    }
+    } */
     // eslint-disable-next-line
     db.collection('post')
-      .doc()
-      .set({
-        userId: uid,
-        name: nickName,
+      // .doc()
+      .add({
+        userId: docRef,
+        // name: nickName,
         post: currentPost,
         likes: numLikes,
       })
@@ -137,7 +137,33 @@ docRef.get().then((doc) => {
     console.log("Error getting document:", error);
 });
 };
+
 export const dataPost = () => {
+  const user = firebase.auth().currentUser;
+  const uid = user.uid;
+  
+  // [START get_multiple]
+  db.collection("post")
+      .get()
+     .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+      /* .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data());
+          });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      }); */
+  // [END get_multiple]
+  return output;
+    })
+})
+}
+
+
+export const setPost = () => {
   const output = 
   // [START get_multiple]
   db.collection("post")
@@ -154,5 +180,3 @@ export const dataPost = () => {
   // [END get_multiple]
   return output;
 }
-
-
