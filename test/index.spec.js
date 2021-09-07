@@ -20,7 +20,7 @@ global.firebase = firebasemock.MockFirebaseSdk(
   (path) => (path ? mockdatabase.child(path) : mockdatabase),
   () => mockauth,
 );
-
+global.db = {} 
 describe('setDataUser', () => {
   it('setDataUser is a function', () => {
     expect(typeof setDataUser).toBe('function');

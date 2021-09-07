@@ -6,7 +6,7 @@ export const setDataUser = (user, nameUser, userData, genderUser, dateUser) => {
     .doc(uid)
     .set({
       name: nameUser,
-      user: userData,
+      userName: userData,
       gender: genderUser,
       date: dateUser,
     })
@@ -101,3 +101,58 @@ export const signOut = () => {
     });
   return out;
 };
+export const setPost = ( currentPost, numLikes ) => {
+  const user = firebase.auth().currentUser;
+  const uid = user.uid;
+  const docRef = db.collection('users').doc(uid);
+  let nickName;  
+docRef.get().then((doc) => {
+  if (doc.exists) {
+    if (doc.data().userName){
+      nickName = doc.data().userName; 
+    }else {
+      nickName = doc.data().name;  
+    }
+    // eslint-disable-next-line
+    db.collection('post')
+      .doc()
+      .set({
+        userId: uid,
+        name: nickName,
+        post: currentPost,
+        likes: numLikes,
+      })
+      .then(() => { 
+        console.log('los datos subieron correctamente')
+      })
+      .catch((error) => {
+        console.log('error' + error)
+      });
+
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch((error) => {
+    console.log("Error getting document:", error);
+});
+};
+export const dataPost = () => {
+  const output = 
+  // [START get_multiple]
+  db.collection("post")
+      .get()
+      /* .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data());
+          });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      }); */
+  // [END get_multiple]
+  return output;
+}
+
+
