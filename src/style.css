@@ -206,10 +206,9 @@
 
   .content-header{
     display: flex;
-    position: fixed;
+    position: sticky;
     justify-content: center;
-    position: absolute;
-    right: 0;
+    right: 0; 
     left: 0;
     top: 0;
   }  
@@ -383,4 +382,20 @@
 
   /* 
     font-family: 'Cookie', cursive;*/
+}
+.body-home{
+  border: 2px solid #e61c1c;
+  width: 100vw;
+  z-index: -1;
+  
+  
+}
+.feed {
+  display: flex;
+  border: 2px solid #d98484;
+  font-family: "Montserrat", sans-serif;
+  color: rgba(0, 0, 0, 0.7);
+  font-size: 12px;
+  font-weight: normal;
+  flex-direction: column-reverse;
 }
