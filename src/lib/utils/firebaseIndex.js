@@ -139,44 +139,23 @@ docRef.get().then((doc) => {
 };
 
 export const dataPost = () => {
-  const user = firebase.auth().currentUser;
-  const uid = user.uid;
-  
-  // [START get_multiple]
-  db.collection("post")
-      .get()
-     .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-      /* .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              // doc.data() is never undefined for query doc snapshots
-              console.log(doc.id, " => ", doc.data());
-          });
-      })
-      .catch((error) => {
-          console.log("Error getting documents: ", error);
-      }); */
-  // [END get_multiple]
-  return output;
-    })
-})
-}
-
-
-export const setPost = () => {
   const output = 
   // [START get_multiple]
   db.collection("post")
       .get()
-      /* .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-              // doc.data() is never undefined for query doc snapshots
-              console.log(doc.id, " => ", doc.data());
-          });
-      })
-      .catch((error) => {
-          console.log("Error getting documents: ", error);
-      }); */
   // [END get_multiple]
   return output;
+}
+
+export const setPost = (idPost, postUpdate) => {
+  const userId = firebase.auth().currentUser.uid;
+  const docRef = db.collection('users').doc(userId);
+  db.collection('post')
+    .doc(idPost)
+    .set({
+      likes: '1',
+      post: postUpdate,
+      userId: docRef
+    })
+    .then(() => { });
 }
