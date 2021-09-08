@@ -221,8 +221,8 @@
     justify-content: flex-start;
     padding: 15px 10px 10px 10px;
     font-family: "Montserrat", sans-serif;
-    color: rgba(0, 0, 0, 0.7);
-    font-size: 12px;
+    color: rgba(5, 5, 5, 0.7);
+    font-size: 14px;
     font-weight:900;
     border-bottom: 0.2px solid rgba(110, 110, 110, 0.253);
     width: 80%;
@@ -235,14 +235,8 @@
   .header-home p{
     margin: 0;
   }
-
-  .body-home{
-    border: 2px solid #e61c1c;
-
-  }
   .feed {
     display: flex;
-    border: 2px solid #d98484;
     font-family: "Montserrat", sans-serif;
     color: rgba(0, 0, 0, 0.7);
     font-size: 12px;
@@ -253,17 +247,31 @@
 
   #div-new-post{
     width: 80%;
-    border: 2px solid #206492;
+    padding: 12px;
+    border-bottom: 0.2px solid rgba(110, 110, 110, 0.5);
+    
+  }
+  .text-post{
+    display: flex;
+    flex-wrap:wrap;
+    margin-left: 36px;
+    width: 80%;
   }
   
   .div-header-post{
-    border: 2px solid #07490b;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight:900;
+  padding-bottom: 6px;
   }
   .div-info-user{
-    border: 2px solid #a540c4;
     display:inline-flex;
     align-items: center;
 
+  }
+  .div-info-user p{
+    margin-left: 10px;
   }
   .content-menu{
     display: flex;
@@ -282,9 +290,6 @@
     border-top: 0.2px solid rgba(110, 110, 110, 0.253); 
     width: 80%;
   }
-
-  
-
   .background-modal-none{
     display: none;
   }
@@ -402,7 +407,9 @@
     left: 0;
   }
 
-  
+  .btn-post-none{
+    display: none;
+  }
 
   .foot{
     display: flex;

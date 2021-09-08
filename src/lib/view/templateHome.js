@@ -1,4 +1,4 @@
-import { signOut, addPost, dataPost } from '../utils/firebaseIndex.js';
+import { signOut, addPost, dataPost, setPost } from '../utils/firebaseIndex.js';
 
 /** Crear div que contiene template de home */
 export const home = () => {
@@ -38,6 +38,8 @@ export const home = () => {
           </div> 
           <div class='btn-content'>
             <button class ='btn-post' id='new-post'>Visibilizar</button>
+            <button class ='btn-post' id='update-post'>Editar</button>
+            <p id='idPost'></p>
           </div>  
         </div>
       </div>
@@ -57,6 +59,13 @@ export const home = () => {
     const divModal = document.querySelector('#modal');
     divModal.classList.remove('background-modal-none');
     divModal.classList.add('background-modal-show');
+    const bntNewPost = document.querySelector('#new-post');
+    bntNewPost.classList.remove('btn-post-none');
+    bntNewPost.classList.add('btn-post');
+    const bntUpdatePost = document.querySelector('#update-post');
+    bntUpdatePost.classList.remove('btn-post');
+    bntUpdatePost.classList.add('btn-post-none');
+    document.querySelector('#text-post').value='';
   });
 
   const btnCloseModal = divHome.querySelector('#close-modal');
@@ -109,19 +118,19 @@ export const home = () => {
   });
 
   const nameCurrentUser = () => {
-    const nameUser = firebase.auth().currentUser.displayName;
+    const nameUser = firebase.auth().currentUser;
     if (nameUser) {
-      document.querySelector('#header-user-post').textContent = nameUser;
-      document.querySelector('#header-user').textContent = nameUser;
-
+      document.querySelector('#header-user-post').textContent = nameUser.displayName;
+      document.querySelector('#header-user').textContent = nameUser.displayName;
     }
+    return nameUser.uid;
   };
   setTimeout(() => {
+    console.log (nameCurrentUser());
     nameCurrentUser();
   }, 800)
 
   
-
   const currentData = () => {
     document.querySelector('#feed-post').innerHTML='';
     dataPost().then((querySnapshot) => {
@@ -129,21 +138,21 @@ export const home = () => {
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
         let divFeedPost = document.querySelector('#feed-post');
-
         const divNewPost = document.createElement('div');
         const divHeaderPost = document.createElement('div');
         const photoUser = document.createElement('img');
         const divInfoUser = document.createElement('div');
         let namePost = document.createElement('p');
         let textPost = document.createElement('p');
+        textPost.setAttribute('class', 'text-post');
         divInfoUser.setAttribute('class', 'div-info-user');
         divHeaderPost.setAttribute('class', 'div-header-post');
         divNewPost.setAttribute('id', 'div-new-post');
         photoUser.src = './images/bxs-face.svg';
         textPost.textContent = doc.data().post;
-        console.log(doc.id);
+        // console.log(doc.id);
         doc.data().userId.get().then((userDoc) => {
-          console.log(userDoc.data());
+          // console.log(userDoc.data());
           namePost.textContent = userDoc.data().name;
           divInfoUser.appendChild(photoUser);
           divInfoUser.appendChild(namePost);
@@ -151,6 +160,31 @@ export const home = () => {
           divNewPost.appendChild(divHeaderPost);
           divNewPost.appendChild(textPost);
           divFeedPost.appendChild(divNewPost);
+          if (nameCurrentUser() === userDoc.id){
+            console.log ('hola');
+          const divContentUpdate = document.createElement('div');
+          const imgUpdate = document.createElement('img');
+          const imgDelete = document.createElement('img');
+          divContentUpdate.setAttribute('class', 'div-content-update');
+          imgUpdate.src = './images/bx-pencil.svg';
+          imgDelete.src = './images/bx-trash.svg';
+          divHeaderPost.appendChild(divContentUpdate);
+          divContentUpdate.appendChild(imgUpdate);
+          divContentUpdate.appendChild(imgDelete);
+          imgUpdate.addEventListener('click',() => {
+            const divModal = document.querySelector('#modal');
+            divModal.classList.remove('background-modal-none');
+            divModal.classList.add('background-modal-show');
+            const bntNewPost = document.querySelector('#new-post');
+            bntNewPost.classList.remove('btn-post');
+            bntNewPost.classList.add('btn-post-none');
+            const bntUpdatePost = document.querySelector('#update-post');
+            bntUpdatePost.classList.remove('btn-post-none');
+            bntUpdatePost.classList.add('btn-post');
+            document.querySelector('#text-post').value=doc.data().post;
+            document.querySelector('#idPost').value=doc.id;
+          }) 
+          }
         })
       });
     })
@@ -161,8 +195,18 @@ export const home = () => {
   setTimeout(() => {
     currentData();
   }, 300)
-
-  
-
+  setTimeout(() => {
+    document.querySelector('#update-post').addEventListener('click',() => {
+      document.querySelector('#text-post').value
+      setPost(document.querySelector('#idPost').value, document.querySelector('#text-post').value);
+      setTimeout(() => {
+        currentData();
+      }, 100)
+      const divModalClose = document.querySelector('#modal');
+      divModalClose.classList.add('background-modal-none');
+      divModalClose.classList.remove('background-modal-show');
+     })
+    },3) 
+ // setPost();
   return divHome;
 };
