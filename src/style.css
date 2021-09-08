@@ -307,7 +307,7 @@
     left: 0;
   }
 
-  .post-modal{
+  .post-modal, .modal-delete{
     display: flex;
     width: 85%;
     max-width: 350px;
@@ -424,4 +424,51 @@
     display: none;
   }
 
+  .background-modal-delete-none{
+    display: none;
+  }
+
+  .background-modal-delete{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    backdrop-filter: blur(1px);
+    top: 0;
+    left: 0;
+  }
+
+  .content-modal-delete{
+    display: flex;
+    padding: 10px 0 10px 0;
+    width: 78%;
+    flex-direction: column;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    justify-content: space-evenly;
+    box-shadow: 5px 5px 5px #555;
+    border-radius: 25px;
+    height: 60%;
+    min-height: 200px;
+  }
+  
+  .btn-confirm-delete {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    justify-content: space-evenly;
+
+  }
+  .btn-confirm-delete button {
+    background: none;
+    border: 0;
+    font-family: "Montserrat", sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 12px;
+    padding: 10px;
+  }
 }
