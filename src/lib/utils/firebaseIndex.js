@@ -145,7 +145,7 @@ export const dataPost = () => {
       .get()
   // [END get_multiple]
   return output;
-}
+};
 
 export const setPost = (idPost, postUpdate) => {
   const userId = firebase.auth().currentUser.uid;
@@ -158,4 +158,12 @@ export const setPost = (idPost, postUpdate) => {
       userId: docRef
     })
     .then(() => { });
-}
+};
+
+export const deletePost = (idPost) => {
+db.collection('post').doc(idPost).delete().then(() => {
+  console.log("Document successfully deleted!");
+}).catch((error) => {
+  console.error("Error removing document: ", error);
+});
+};

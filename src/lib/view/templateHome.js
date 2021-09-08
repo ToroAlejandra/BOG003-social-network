@@ -1,4 +1,4 @@
-import { signOut, addPost, dataPost, setPost } from '../utils/firebaseIndex.js';
+import { signOut, addPost, dataPost, setPost, deletePost } from '../utils/firebaseIndex.js';
 
 /** Crear div que contiene template de home */
 export const home = () => {
@@ -44,7 +44,20 @@ export const home = () => {
         </div>
       </div>
     </div>
-  
+    <div class= 'background-modal-delete-none' id='modal-delete'>
+      <div class= 'modal-delete'>
+        <div class= 'content-modal-delete'>
+          <h3>¿Eliminar publicación?</h3>
+          <p>¿Seguro que quieres eliminar esta publicación?</p>
+            <div class='btn-confirm-delete'>
+              <button class ='btn-delete' id='btn-delete'>Eliminar</button>
+              <button class ='btn-cancel' id='btn-cancel'>Cancelar</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+
     `;
   divHome.innerHTML = viewHome;
 
@@ -65,7 +78,7 @@ export const home = () => {
     const bntUpdatePost = document.querySelector('#update-post');
     bntUpdatePost.classList.remove('btn-post');
     bntUpdatePost.classList.add('btn-post-none');
-    document.querySelector('#text-post').value='';
+    document.querySelector('#text-post').value = '';
   });
 
   const btnCloseModal = divHome.querySelector('#close-modal');
@@ -126,13 +139,13 @@ export const home = () => {
     return nameUser.uid;
   };
   setTimeout(() => {
-    console.log (nameCurrentUser());
+    console.log(nameCurrentUser());
     nameCurrentUser();
   }, 800)
 
-  
+
   const currentData = () => {
-    document.querySelector('#feed-post').innerHTML='';
+    document.querySelector('#feed-post').innerHTML = '';
     dataPost().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         // doc.data() is never undefined for query doc snapshots
@@ -160,30 +173,37 @@ export const home = () => {
           divNewPost.appendChild(divHeaderPost);
           divNewPost.appendChild(textPost);
           divFeedPost.appendChild(divNewPost);
-          if (nameCurrentUser() === userDoc.id){
-            console.log ('hola');
-          const divContentUpdate = document.createElement('div');
-          const imgUpdate = document.createElement('img');
-          const imgDelete = document.createElement('img');
-          divContentUpdate.setAttribute('class', 'div-content-update');
-          imgUpdate.src = './images/bx-pencil.svg';
-          imgDelete.src = './images/bx-trash.svg';
-          divHeaderPost.appendChild(divContentUpdate);
-          divContentUpdate.appendChild(imgUpdate);
-          divContentUpdate.appendChild(imgDelete);
-          imgUpdate.addEventListener('click',() => {
-            const divModal = document.querySelector('#modal');
-            divModal.classList.remove('background-modal-none');
-            divModal.classList.add('background-modal-show');
-            const bntNewPost = document.querySelector('#new-post');
-            bntNewPost.classList.remove('btn-post');
-            bntNewPost.classList.add('btn-post-none');
-            const bntUpdatePost = document.querySelector('#update-post');
-            bntUpdatePost.classList.remove('btn-post-none');
-            bntUpdatePost.classList.add('btn-post');
-            document.querySelector('#text-post').value=doc.data().post;
-            document.querySelector('#idPost').value=doc.id;
-          }) 
+          if (nameCurrentUser() === userDoc.id) {
+            console.log('hola');
+            const divContentUpdate = document.createElement('div');
+            const imgUpdate = document.createElement('img');
+            const imgDelete = document.createElement('img');
+            divContentUpdate.setAttribute('class', 'div-content-update');
+            imgUpdate.src = './images/bx-pencil.svg';
+            imgDelete.src = './images/bx-trash.svg';
+            divHeaderPost.appendChild(divContentUpdate);
+            divContentUpdate.appendChild(imgUpdate);
+            divContentUpdate.appendChild(imgDelete);
+            imgUpdate.addEventListener('click', () => {
+              const divModal = document.querySelector('#modal');
+              divModal.classList.remove('background-modal-none');
+              divModal.classList.add('background-modal-show');
+              const bntNewPost = document.querySelector('#new-post');
+              bntNewPost.classList.remove('btn-post');
+              bntNewPost.classList.add('btn-post-none');
+              const bntUpdatePost = document.querySelector('#update-post');
+              bntUpdatePost.classList.remove('btn-post-none');
+              bntUpdatePost.classList.add('btn-post');
+              document.querySelector('#text-post').value = doc.data().post;
+              document.querySelector('#idPost').value = doc.id;
+            })
+            imgDelete.addEventListener('click', () => {
+              const divModalDelete = document.querySelector('#modal-delete');
+              divModalDelete.classList.remove('background-modal-delete-none');
+              divModalDelete.classList.add('background-modal-delete');
+              document.querySelector('#btn-delete').value = doc.id;
+
+            })
           }
         })
       });
@@ -196,17 +216,35 @@ export const home = () => {
     currentData();
   }, 300)
   setTimeout(() => {
-    document.querySelector('#update-post').addEventListener('click',() => {
+    document.querySelector('#update-post').addEventListener('click', () => {
       document.querySelector('#text-post').value
       setPost(document.querySelector('#idPost').value, document.querySelector('#text-post').value);
       setTimeout(() => {
         currentData();
-      }, 100)
+      }, 100);
       const divModalClose = document.querySelector('#modal');
       divModalClose.classList.add('background-modal-none');
       divModalClose.classList.remove('background-modal-show');
-     })
-    },3) 
- // setPost();
+    })
+  }, 3);
+
+  setTimeout(() => {
+    document.querySelector('#btn-delete').addEventListener('click', () => {
+      deletePost(document.querySelector('#btn-delete').value);
+      console.log(document.querySelector('#btn-delete').value)
+      const divModalDelete = document.querySelector('#modal-delete');
+      divModalDelete.classList.remove('background-modal-delete');
+      divModalDelete.classList.add('background-modal-delete-none');
+    });
+  }, 3);
+
+  setTimeout(() => {
+    document.querySelector('#btn-cancel').addEventListener('click', () => {
+      const divModalDelete = document.querySelector('#modal-delete');
+      divModalDelete.classList.remove('background-modal-delete');
+      divModalDelete.classList.add('background-modal-delete-none');
+    });
+  }, 3);
+  // setPost();
   return divHome;
 };
