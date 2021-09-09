@@ -47,7 +47,7 @@ export const home = () => {
     <div class= 'background-modal-delete-none' id='modal-delete'>
       <div class= 'modal-delete'>
         <div class= 'content-modal-delete'>
-          <h3>¿Eliminar publicación?</h3>
+          <h3>¿Eliminar <br> publicación?</h3>
           <p>¿Seguro que quieres eliminar esta publicación?</p>
             <div class='btn-confirm-delete'>
               <button class ='btn-delete' id='btn-delete'>Eliminar</button>
