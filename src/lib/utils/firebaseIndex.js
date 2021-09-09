@@ -101,11 +101,10 @@ export const signOut = () => {
     });
   return out;
 };
-export const addPost = ( currentPost, numLikes ) => {
+export const addPost = ( currentPost ) => {
   const user = firebase.auth().currentUser;
   const uid = user.uid;
-  const docRef = db.collection('users').doc(uid);
-  let nickName;  
+  const docRef = db.collection('users').doc(uid); 
 docRef.get().then((doc) => {
   if (doc.exists) {
     /* if (doc.data().userName){
@@ -120,7 +119,7 @@ docRef.get().then((doc) => {
         userId: docRef,
         // name: nickName,
         post: currentPost,
-        likes: numLikes,
+        likes: [],
       })
       .then(() => { 
         console.log('los datos subieron correctamente')
@@ -138,14 +137,7 @@ docRef.get().then((doc) => {
 });
 };
 
-export const dataPost = () => {
-  const output = 
-  // [START get_multiple]
-  db.collection("post")
-      .get()
-  // [END get_multiple]
-  return output;
-};
+export const dataPost = () => db.collection("post")
 
 export const setPost = (idPost, postUpdate) => {
   const userId = firebase.auth().currentUser.uid;
@@ -153,7 +145,7 @@ export const setPost = (idPost, postUpdate) => {
   db.collection('post')
     .doc(idPost)
     .set({
-      likes: '1',
+      likes: [],
       post: postUpdate,
       userId: docRef
     })
@@ -167,3 +159,19 @@ db.collection('post').doc(idPost).delete().then(() => {
   console.error("Error removing document: ", error);
 });
 };
+
+export const addLike = (idPost, idUser) => {
+let collectionLikes = db.collection('post').doc(idPost);
+// Atomically add a new region to the "regions" array field.
+collectionLikes.update({
+    likes: firebase.firestore.FieldValue.arrayUnion(idUser),
+});
+};
+
+export const removeLike = (idPost, idUser) => {
+  let collectionLikes = db.collection('post').doc(idPost);
+  // Atomically add a new region to the "regions" array field.
+  collectionLikes.update({
+      likes: firebase.firestore.FieldValue.arrayRemove(idUser),
+  });
+  };

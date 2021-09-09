@@ -243,6 +243,7 @@
     font-weight: normal;
     flex-direction: column-reverse;
     align-items: center;
+    padding-bottom: 40px ;
   }
 
   #div-new-post{
@@ -273,6 +274,28 @@
   .div-info-user p{
     margin-left: 10px;
   }
+
+  .div-content-likes{
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .img-like-none{
+    display:flex ;
+    
+    width: 24px;
+    height: 24px;
+  }
+
+  .img-like-show{
+    display: flex;
+    
+    width: 24px;
+    height: 24px;
+    border: 0;
+   
+  }
+
   .content-menu{
     display: flex;
     justify-content: center;
@@ -441,6 +464,8 @@
   }
   .background-modal-delete h3{
     text-align:center;
+    color: #262626;
+    font-weight: bolder; 
   }  
   .modal-delete{
     display: flex;
@@ -471,8 +496,9 @@
     padding-top: 10px;
   }
   .content-modal-delete p{
-  text-align: center;
-  padding: 12px 5px 12px 5px;  
+    text-align: center;
+    padding: 12px 5px 12px 5px;
+    color: rgba(0, 0, 0, 0.7); 
   }
   .btn-confirm-delete {
     display: flex;
@@ -487,13 +513,17 @@
     font-size: 14px;
     font-weight: 900;
     padding: 10px;
-    height: 45px;
+    height: 45px; 
+    
   }
+
   .btn-confirm-delete .btn-delete{
-    color: rgb(106, 78, 166);
+    color: #6A4EA6;
     width: 100%;
     border-bottom: 0.5px solid rgba(110, 110, 110, 0.507);
     border-top: 0.5px solid rgba(110, 110, 110, 0.507);
+    text-shadow: 1px 1px 2px #6A4EA6;
+
   }
   .btn-confirm-delete .btn-cancel{
     color: rgba(0, 0, 0, 0.7);
