@@ -1,4 +1,4 @@
-import { signOut, addPost, dataPost, setPost, deletePost } from '../utils/firebaseIndex.js';
+import { signOut, addPost, dataPost, setPost, removeLike, deletePost, addLike } from '../utils/firebaseIndex.js';
 
 /** Crear div que contiene template de home */
 export const home = () => {
@@ -56,8 +56,6 @@ export const home = () => {
         </div>
       </div>
     </div>
-
-
     `;
   divHome.innerHTML = viewHome;
 
@@ -121,10 +119,8 @@ export const home = () => {
       divModalClose.classList.add('background-modal-none');
       divModalClose.classList.remove('background-modal-show');
       window.location.hash = '#/home';
-      addPost(textPost, 1);
-      setTimeout(() => {
-        currentData();
-      }, 300)
+      addPost(textPost);
+
     }
     document.querySelector('#text-post').value = '';
     // window.location.reload()
@@ -143,28 +139,48 @@ export const home = () => {
     nameCurrentUser();
   }, 800)
 
-
   const currentData = () => {
-    document.querySelector('#feed-post').innerHTML = '';
-    dataPost().then((querySnapshot) => {
+    dataPost().onSnapshot((querySnapshot) => {
       querySnapshot.forEach((doc) => {
+        document.querySelector('#feed-post').innerHTML = '';
         // doc.data() is never undefined for query doc snapshots
         // console.log(doc.id, " => ", doc.data());
         let divFeedPost = document.querySelector('#feed-post');
         const divNewPost = document.createElement('div');
+        divNewPost.setAttribute('id', 'div-new-post');
         const divHeaderPost = document.createElement('div');
+        divHeaderPost.setAttribute('class', 'div-header-post');
         const photoUser = document.createElement('img');
+        photoUser.src = './images/bxs-face.svg';
         const divInfoUser = document.createElement('div');
+        divInfoUser.setAttribute('class', 'div-info-user');
+        
         let namePost = document.createElement('p');
         let textPost = document.createElement('p');
         textPost.setAttribute('class', 'text-post');
-        divInfoUser.setAttribute('class', 'div-info-user');
-        divHeaderPost.setAttribute('class', 'div-header-post');
-        divNewPost.setAttribute('id', 'div-new-post');
-        photoUser.src = './images/bxs-face.svg';
         textPost.textContent = doc.data().post;
-        // console.log(doc.id);
         doc.data().userId.get().then((userDoc) => {
+          const numLikes = document.createElement('p');
+          const divLikes = document.createElement('div');
+          divLikes.setAttribute('class', 'div-likes');
+          const divContentLikes = document.createElement('div');
+          divContentLikes.setAttribute('class', 'div-content-likes');
+          let imgLike = document.createElement('img');
+          imgLike.setAttribute('id', 'img-like');
+          numLikes.textContent = doc.data().likes.length;
+          if (doc.data().likes.includes(nameCurrentUser())) {
+            console.log('pone');
+            imgLike.classList.remove('img-like-show');
+            imgLike.classList.add('img-like-none');
+            imgLike.src = './images/heartLike.svg';
+            console.log(doc.data().likes)
+          }
+          else {
+            imgLike.classList.remove('img-like-none');
+            imgLike.classList.add('img-like-show');
+            imgLike.src = './images/heart.svg';
+            console.log(doc.data().likes)
+          }
           // console.log(userDoc.data());
           namePost.textContent = userDoc.data().name;
           divInfoUser.appendChild(photoUser);
@@ -172,9 +188,15 @@ export const home = () => {
           divHeaderPost.appendChild(divInfoUser);
           divNewPost.appendChild(divHeaderPost);
           divNewPost.appendChild(textPost);
+          divContentLikes.appendChild(imgLike);
+
+          divContentLikes.appendChild(numLikes);
+          divLikes.appendChild(divContentLikes);
+          divNewPost.appendChild(divLikes);
           divFeedPost.appendChild(divNewPost);
+
           if (nameCurrentUser() === userDoc.id) {
-            console.log('hola');
+
             const divContentUpdate = document.createElement('div');
             const imgUpdate = document.createElement('img');
             const imgDelete = document.createElement('img');
@@ -205,23 +227,29 @@ export const home = () => {
 
             })
           }
+          imgLike.addEventListener('click', () => {
+
+            if (doc.data().likes.includes(nameCurrentUser())) {
+              removeLike(doc.id, nameCurrentUser());
+            }
+            else {
+              addLike(doc.id, nameCurrentUser());
+            }
+          });
+
         })
       });
     })
-      .catch((error) => {
-        console.log("Error getting documents: ", error);
-      });
-  }
+  };
+
   setTimeout(() => {
     currentData();
   }, 300)
+
   setTimeout(() => {
     document.querySelector('#update-post').addEventListener('click', () => {
       document.querySelector('#text-post').value
       setPost(document.querySelector('#idPost').value, document.querySelector('#text-post').value);
-      setTimeout(() => {
-        currentData();
-      }, 100);
       const divModalClose = document.querySelector('#modal');
       divModalClose.classList.add('background-modal-none');
       divModalClose.classList.remove('background-modal-show');
@@ -245,6 +273,12 @@ export const home = () => {
       divModalDelete.classList.add('background-modal-delete-none');
     });
   }, 3);
+
+  const likes = () =>{
+
+  }
+
   // setPost();
   return divHome;
 };
+
