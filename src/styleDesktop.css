@@ -1,0 +1,62 @@
+@media screen and (min-width: 769px) {
+    .screen-login{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        height: 90vh;
+        width: 100vw;
+    }
+
+    .img-login{
+        display: flex;
+        width: 50%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .img-login img{
+        min-width: 300px;
+        min-height: 300px;
+        max-width: 600px;
+        max-height: 550px;
+        margin-left: 15px;       
+    }
+
+    .container-form{
+        display: flex;
+        width: 50%;
+        align-items: center;
+        flex-direction: column;
+        border: 4px solid orangered;
+    }
+
+    .logo-login{
+        width: 50%;
+    }
+
+    .section-signin,
+    .section-login {
+        display: flex;
+        align-items: center;
+    }
+
+    .divLogin h1{
+        font-size: 90px;
+        text-align:end;
+    }
+    
+    .logo{
+        width: 80px;
+        height: 80px;
+    }
+    .section-signin .input-group input{
+        margin-top: 3%;
+    }
+    #gender select{
+        margin-top: 3%;
+    }
+    .headSignin{
+        margin-bottom: 0;
+    }
+}

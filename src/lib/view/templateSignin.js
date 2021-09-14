@@ -12,59 +12,68 @@ export const signin = () => {
   const divSignin = document.createElement('div');
   divSignin.setAttribute('class', 'divSignin');
   const viewSignin = `
-    <div class='headSignin'>
-      <img class='logo' src='./images/protest.svg'></img>
-    </div>
-    <div class='section-signin'>
+  <div class='screen-login'>
+   <div class='img-login'>
+    <img src='./images/juntas.webp' alt= 'equidad'></img>
+   </div>  
+    <div class='container-form'>
+      <div class='headSignin'>
+        <img class='logo' src='./images/protest.svg'></img>
+      </div>
+      <div class='section-signin'>
       <div class='input-group'>
-        <input type='email' id='inputEmail' placeholder='E-mail'>
-        <div id='msj-error-email' class='msj-error-date-none'>
-         <img src= './images/bx-x-circle.svg'></img><p id='error-email'> </p>
-        </div>
-        <input type='text' id='inputName' placeholder='Nombre' required>
-        <input type='text' id='inputNameUser' placeholder='Nombre de usuario' required>
-        <div id='gender'><select id='gender-select' >
-        <option disabled selected> Selecciona el género </option>
-        <option>Femenino</option>
-        <option>Masculino</option>
-        <option>GenderQueer</option>
-        </select>
-        </div>
-        <p> Fecha de nacimiento</p><input type='date' id='date'>
-        <div id='msj-error-date' class='msj-error-date-none'>
-          <img src= './images/bx-x-circle.svg'></img><p id='errorDate'> </p>
-        </div>
-        <input type='password' name='' id='inputPass' placeholder='Contraseña'>
-        <div id='msj-error-password' class='msj-error-date-none'>
-          <img src= './images/bx-x-circle.svg'></img><p id='errorPassword'> </p>
-        </div>
-        <input type='password' name='' id='inputPassConfirm' placeholder='Confirma tu contraseña'>
-        <div id='msj-error-confirm' class='msj-error-date-none'>
-          <img src= './images/bx-x-circle.svg'></img><p id='errorPasswordConfirm'> </p>
-        </div>
+          <input type='email' id='inputEmail' placeholder='E-mail'>
+          <div id='msj-error-email' class='msj-error-date-none'>
+          <img src= './images/bx-x-circle.svg'></img><p id='error-email'> </p>
           </div>
-          <div id= 'msj-verified' class= 'msj-verified'>
-          <img class= 'bx-mail' src= './images/bx-mail-send.png'></img><p>¡Registro exitoso! Te hemos enviado un correo de verificación para tu ingreso</p>
+          <input type='text' id='inputName' placeholder='Nombre' required>
+          <input type='text' id='inputNameUser' placeholder='Nombre de usuario' required>
+          <div id='gender'><select id='gender-select' >
+          <option disabled selected> Selecciona el género </option>
+          <option>Femenino</option>
+          <option>Masculino</option>
+          <option>GenderQueer</option>
+          </select>
+          </div>
+          <p> Fecha de nacimiento</p><input type='date' id='date'>
+          <div id='msj-error-date' class='msj-error-date-none'>
+            <img src= './images/bx-x-circle.svg'></img><p id='errorDate'> </p>
+          </div>
+          <input type='password' name='' id='inputPass' placeholder='Contraseña'>
+          <div id='msj-error-password' class='msj-error-date-none'>
+            <img src= './images/bx-x-circle.svg'></img><p id='errorPassword'> </p>
+          </div>
+          <input type='password' name='' id='inputPassConfirm' placeholder='Confirma tu contraseña'>
+          <div id='msj-error-confirm' class='msj-error-date-none'>
+            <img src= './images/bx-x-circle.svg'></img><p id='errorPasswordConfirm'> </p>
+          </div>
+            </div>
+            <div id= 'msj-verified' class= 'msj-verified'>
+            <img class= 'bx-mail' src= './images/bx-mail-send.png'></img><p>¡Registro exitoso! Te hemos enviado un correo de verificación para tu ingreso</p>
+            </div>  
+          <button class='btn-register' id='signinEmail'> Regístrate </button>
+          <div id= 'msj-error-default' class= 'msj-error-date-none'>
+          <img class= 'bx-errorMesage' src= './images/error_outline.png'><p id='errorMesageSignin'></p>
+          </div>
+          <div class='line'>
+          <div class='line-one'>
+          </div>
+          <p>o ingresa con</p>
+          <div class='line-two'>
+          </div>
           </div>  
-        <button class='btn-register' id='signinEmail'> Regístrate </button>
-        <div id= 'msj-error-default' class= 'msj-error-date-none'>
-        <img class= 'bx-errorMesage' src= './images/error_outline.png'><p id='errorMesageSignin'></p>
-        </div>
-        <div class='line'>
-        <div class='line-one'>
-        </div>
-        <p>o ingresa con</p>
-        <div class='line-two'>
-        </div>
-        </div>  
-        <img src= './images/logo-google.png' id='signinGoogle'></img>
-        <div class='link-account'>
-         <p> ¿Ya tienes cuenta?</p><a id='loginHref' href='#/'>Inicia sesión</a>
-        </div> 
-    </div>
+          <img src= './images/logo-google.png' id='signinGoogle'></img>
+          <div class='link-account'>
+          <p> ¿Ya tienes cuenta?</p><a id='loginHref' href='#/'>Inicia sesión</a>
+          </div> 
+      </div>
+    </div>  
+  </div>  
         `;
 
   divSignin.innerHTML = viewSignin;
+
+  /** Limpiar valores de los input */
 
   const clearInput = () => {
     document.querySelector('#inputEmail').value = '';
@@ -94,6 +103,7 @@ export const signin = () => {
     const gender = document.querySelector('#gender').value;
     let isValidDate = false;
 
+    /** Validar que no se ingrese una fecha invalida */  
     if (date === '' || date === null || date.length < 10) {
       document.querySelector('#msj-error-date').classList.remove('msj-error-date-none');
       document.querySelector('#msj-error-date').classList.add('msj-error-date-show');
@@ -107,6 +117,7 @@ export const signin = () => {
       document.querySelector('#msj-error-date').classList.remove('msj-error-date-show');
       document.querySelector('#msj-error-date').classList.add('msj-error-date-none');
     }
+    /** no permite que se ingresen campos vacios */
     if (gender !== '' && nameUser !== '' && name !== '' && isValidDate === true) {
       if (userPassword === userPasswordConfirm) {
         /** Usamos el metodo signUpWithEmailPassword para ingresar con usuario y contraseña */
