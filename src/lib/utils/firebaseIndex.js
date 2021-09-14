@@ -108,7 +108,7 @@ export const addPost = (currentPost) => {
         })
         .catch((error) => error);
     } else {
-      // doc.data() estaria indefinido en este caso 
+      // doc.data() estaria indefinido en este caso
       // doc.data() will be undefined in this case
     }
   }).catch((error) => error);

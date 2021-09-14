@@ -7,6 +7,7 @@ export const home = () => {
   const divHome = document.createElement('div');
   const viewHome = `
   <div class= 'body-home'>
+   
     <div class= 'content-header'>
       <div class= 'header-home'>
         <img src= './images/bxs-face.svg' id='photo-user'></img>
@@ -65,7 +66,7 @@ export const home = () => {
   btnHome.addEventListener('click', () => {
     window.location.reload();
   });
-  /** Este evento permite abrir una modal para escribir un nuevo post */ 
+  /** Este evento permite abrir una modal para escribir un nuevo post */
   const btnAddPost = divHome.querySelector('#add-post');
   btnAddPost.addEventListener('click', () => {
     const divModal = document.querySelector('#modal');
@@ -113,7 +114,7 @@ export const home = () => {
         document.querySelector('#input-content').classList.remove('input-post-error');
         document.querySelector('#input-content').classList.add('content-input');
       }, 2000);
-      /** al haber texto se cierra la modal y se ejecuta addPost 
+      /** al haber texto se cierra la modal y se ejecuta addPost
        * (Se ejecuta la creación de la colección en firebase) */
     } else {
       const divModalClose = document.querySelector('#modal');
@@ -235,7 +236,7 @@ export const home = () => {
   }, 300);
 
   setTimeout(() => {
-    /** este evento permite actualizar el post en la colección y cierra la modal*/
+    /** este evento permite actualizar el post en la colección y cierra la modal */
     document.querySelector('#update-post').addEventListener('click', () => {
       setPost(document.querySelector('#idPost').value, document.querySelector('#text-post').value);
       const divModalClose = document.querySelector('#modal');
@@ -253,7 +254,7 @@ export const home = () => {
       divModalDelete.classList.add('background-modal-delete-none');
     });
   }, 3);
-  /** este evento muestra modal de confirmación para eliminar post */ 
+  /** este evento muestra modal de confirmación para eliminar post */
   setTimeout(() => {
     document.querySelector('#btn-cancel').addEventListener('click', () => {
       const divModalDelete = document.querySelector('#modal-delete');
