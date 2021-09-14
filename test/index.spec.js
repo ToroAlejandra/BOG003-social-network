@@ -1,21 +1,67 @@
 import {
-/*   signUpWithEmailPassword,
-  loginGoogle,
-  signOut,
-  setDataUser,
-  getCurrentUser,
-  sendLink,
-  setPersistence, */
-  loginWithPasswordEmail,
+  /*   signUpWithEmailPassword,
+    loginGoogle,
+    signOut,
+    setDataUser,
+    getCurrentUser,
+    sendLink,
+    setPersistence,
+  loginWithPasswordEmail, */
   addPost,
   // dataPost,
 } from '../src/lib/utils/firebaseIndex.js';
 
-const firebasemock = require('firebase-mock');
+const { mockFirebase } = require('firestore-jest-mock');
+
+mockFirebase({
+  database: {
+    users: [
+      {
+        date: '01-12-1990', gender: 'masculino', name: 'Homer Simpson', userName: 'Homer',
+      },
+      {
+        date: '01-10-1996', gender: 'femenino', name: 'lisa Simpson', userName: 'lisa',
+      },
+    ],
+    post: [
+      { likes: '', post: 'Really cool title', userId: '123456' },
+      { likes: '', post: ' cool title', userId: '789456' },
+    ],
+  },
+});
+
+const { mockCollection } = require('firestore-jest-mock/mocks/firestore');
+
+describe('addPost', () => {
+  // eslint-disable-next-line
+  const firebase = require('firebase');
+  const db = firebase.firestore();
+  it('get post', () => db
+    .collection('users')
+    .get()
+    .then((userDocs) => {
+      expect(mockCollection).toHaveBeenCalledWith('users');
+      expect(userDocs.docs[0].data().name).toEqual('Homer Simpson');
+    }));
+
+  it('add post', () => {
+    const text = 'Hola';
+    // return loginWithPasswordEmail('example@gmail.com', '1234567').then((res) => {
+    return addPost(text).then(() => {
+      // eslint-disable-next-line
+      db.collection('post').where('post', '==', text).get().then((querySnapshot) => {
+        expect(querySnapshot.size).toBe(1);
+      });
+    });
+    // });
+  });
+});
+
+// const MockFirebase = require('firebase-mock');
 // const { mockFirebase } = require('firestore-jest-mock');
 // const { mockCollection } = require('firestore-jest-mock/mocks/firestore');
 
-const mockauth = new firebasemock.MockFirebase();
+/* const mockauth = new firebasemock.MockFirebase();
 const mockdatabase = new firebasemock.MockFirebase();
 mockdatabase.autoFlush();
 mockauth.autoFlush();
@@ -37,7 +83,7 @@ const db = new firebasemock.MockFirebase({
     likes: '', post: 'Really cool title', userId: '123456',
   }],
 },
-{});
+{}); */
 
 /* describe('setDataUser', () => {
   it('setDataUser is a function', () => {
@@ -125,7 +171,7 @@ describe('Log Out', () => {
   }));
 });
  */
-describe('addPost', () => {
+/* describe('addPost', () => {
   it('add-post is a function', () => {
     expect(typeof addPost).toBe('function');
   });
@@ -143,7 +189,7 @@ describe('addPost', () => {
       });
     });
   });
-});
+}); */
 
 /* describe('dataPost', () => {
   it('data-post is a function', () => {

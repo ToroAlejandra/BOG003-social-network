@@ -103,7 +103,7 @@ export const signin = () => {
     const gender = document.querySelector('#gender').value;
     let isValidDate = false;
 
-    /** Validar que no se ingrese una fecha invalida */  
+    /** Validar que no se ingrese una fecha invalida */
     if (date === '' || date === null || date.length < 10) {
       document.querySelector('#msj-error-date').classList.remove('msj-error-date-none');
       document.querySelector('#msj-error-date').classList.add('msj-error-date-show');
