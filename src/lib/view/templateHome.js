@@ -1,4 +1,6 @@
-import { signOut, addPost, dataPost, setPost, removeLike, deletePost, addLike } from '../utils/firebaseIndex.js';
+import {
+  signOut, addPost, dataPost, setPost, removeLike, deletePost, addLike,
+} from '../utils/firebaseIndex.js';
 
 /** Crear div que contiene template de home */
 export const home = () => {
@@ -58,13 +60,12 @@ export const home = () => {
     </div>
     `;
   divHome.innerHTML = viewHome;
-
+  /** Este evento permite recagar la pagina de home */
   const btnHome = divHome.querySelector('#home-page');
   btnHome.addEventListener('click', () => {
-    window.location.hash = '#/home';
-    console.log(window.location.hash);
+    window.location.reload();
   });
-
+  /** Este evento permite abrir una modal para escribir un nuevo post */ 
   const btnAddPost = divHome.querySelector('#add-post');
   btnAddPost.addEventListener('click', () => {
     const divModal = document.querySelector('#modal');
@@ -78,34 +79,32 @@ export const home = () => {
     bntUpdatePost.classList.add('btn-post-none');
     document.querySelector('#text-post').value = '';
   });
-
+  /** Este evento permite cerrar la modal */
   const btnCloseModal = divHome.querySelector('#close-modal');
   btnCloseModal.addEventListener('click', () => {
     const divModalClose = document.querySelector('#modal');
     divModalClose.classList.remove('background-modal-show');
     divModalClose.classList.add('background-modal-none');
   });
-
+  /** Este evento permite cerrar sesión */
   const btnLogOut = divHome.querySelector('#log-out');
   btnLogOut.addEventListener('click', () => {
     signOut();
     window.location.hash = '#/';
   });
-
+  /** Este evento permite crear el post y cerrar la modal */
   const btnNewPost = divHome.querySelector('#new-post');
   btnNewPost.addEventListener('click', () => {
-    const divFeedPost = document.querySelector('#feed-post');
     const divNewPost = document.createElement('div');
-
     divNewPost.setAttribute('class', 'div-new-post');
     let textPost = document.createElement('p');
-    let textPostContent = document.createElement('p');
-    textPostContent.setAttribute('id', 'text-post-content')
+    const textPostContent = document.createElement('p');
+    textPostContent.setAttribute('id', 'text-post-content');
     textPost = document.querySelector('#text-post').value;
-    textPost = textPost.trim();
-
+    textPost = textPost.trim(); // Devulve la cadena de texto sin espacios al principio y al final
+    /** si hay un campo vacio se envia el aviso de error */
     if (textPost === '') {
-      let inputText = document.querySelector('#text-post');
+      const inputText = document.querySelector('#text-post');
       inputText.placeholder = 'No puedes ingresar un campo vacío';
       document.querySelector('#input-content').classList.remove('content-input');
       document.querySelector('#input-content').classList.add('input-post-error');
@@ -114,18 +113,18 @@ export const home = () => {
         document.querySelector('#input-content').classList.remove('input-post-error');
         document.querySelector('#input-content').classList.add('content-input');
       }, 2000);
+      /** al haber texto se cierra la modal y se ejecuta addPost 
+       * (Se ejecuta la creación de la colección en firebase) */
     } else {
       const divModalClose = document.querySelector('#modal');
       divModalClose.classList.add('background-modal-none');
       divModalClose.classList.remove('background-modal-show');
       window.location.hash = '#/home';
       addPost(textPost);
-
     }
     document.querySelector('#text-post').value = '';
-    // window.location.reload()
   });
-
+  /** Esta función trae el usuario actual, asigna al header, al post y retorna el id del usuario  */
   const nameCurrentUser = () => {
     const nameUser = firebase.auth().currentUser;
     if (nameUser) {
@@ -135,17 +134,15 @@ export const home = () => {
     return nameUser.uid;
   };
   setTimeout(() => {
-    console.log(nameCurrentUser());
     nameCurrentUser();
-  }, 800)
-
+  }, 800);
+  /** Esta funcion llama a datapost (trae la colección) */
   const currentData = () => {
+    /** onSnapshot realiza actualizaciones en tiempo real */
     dataPost().onSnapshot((querySnapshot) => {
       querySnapshot.forEach((doc) => {
         document.querySelector('#feed-post').innerHTML = '';
-        // doc.data() is never undefined for query doc snapshots
-        // console.log(doc.id, " => ", doc.data());
-        let divFeedPost = document.querySelector('#feed-post');
+        const divFeedPost = document.querySelector('#feed-post');
         const divNewPost = document.createElement('div');
         divNewPost.setAttribute('id', 'div-new-post');
         const divHeaderPost = document.createElement('div');
@@ -154,9 +151,8 @@ export const home = () => {
         photoUser.src = './images/bxs-face.svg';
         const divInfoUser = document.createElement('div');
         divInfoUser.setAttribute('class', 'div-info-user');
-        
-        let namePost = document.createElement('p');
-        let textPost = document.createElement('p');
+        const namePost = document.createElement('p');
+        const textPost = document.createElement('p');
         textPost.setAttribute('class', 'text-post');
         textPost.textContent = doc.data().post;
         doc.data().userId.get().then((userDoc) => {
@@ -165,7 +161,7 @@ export const home = () => {
           divLikes.setAttribute('class', 'div-likes');
           const divContentLikes = document.createElement('div');
           divContentLikes.setAttribute('class', 'div-content-likes');
-          let imgLike = document.createElement('img');
+          const imgLike = document.createElement('img');
           imgLike.setAttribute('id', 'img-like');
           numLikes.textContent = doc.data().likes.length;
           if (doc.data().likes.includes(nameCurrentUser())) {
@@ -173,15 +169,11 @@ export const home = () => {
             imgLike.classList.remove('img-like-show');
             imgLike.classList.add('img-like-none');
             imgLike.src = './images/heartLike.svg';
-            console.log(doc.data().likes)
-          }
-          else {
+          } else {
             imgLike.classList.remove('img-like-none');
             imgLike.classList.add('img-like-show');
             imgLike.src = './images/heart.svg';
-            console.log(doc.data().likes)
           }
-          // console.log(userDoc.data());
           namePost.textContent = userDoc.data().name;
           divInfoUser.appendChild(photoUser);
           divInfoUser.appendChild(namePost);
@@ -189,14 +181,13 @@ export const home = () => {
           divNewPost.appendChild(divHeaderPost);
           divNewPost.appendChild(textPost);
           divContentLikes.appendChild(imgLike);
-
           divContentLikes.appendChild(numLikes);
           divLikes.appendChild(divContentLikes);
           divNewPost.appendChild(divLikes);
           divFeedPost.appendChild(divNewPost);
-
+          /** si el id del usuario actual es igual al id del creador del post
+           * le muestra las opciones editar y borrar */
           if (nameCurrentUser() === userDoc.id) {
-
             const divContentUpdate = document.createElement('div');
             const imgUpdate = document.createElement('img');
             const imgDelete = document.createElement('img');
@@ -218,54 +209,51 @@ export const home = () => {
               bntUpdatePost.classList.add('btn-post');
               document.querySelector('#text-post').value = doc.data().post;
               document.querySelector('#idPost').value = doc.id;
-            })
+            });
             imgDelete.addEventListener('click', () => {
               const divModalDelete = document.querySelector('#modal-delete');
               divModalDelete.classList.remove('background-modal-delete-none');
               divModalDelete.classList.add('background-modal-delete');
               document.querySelector('#btn-delete').value = doc.id;
-
-            })
+            });
           }
+          /** este evento permite dar un solo like o quitarlo */
           imgLike.addEventListener('click', () => {
-
             if (doc.data().likes.includes(nameCurrentUser())) {
               removeLike(doc.id, nameCurrentUser());
-            }
-            else {
+            } else {
               addLike(doc.id, nameCurrentUser());
             }
           });
-
-        })
+        });
       });
-    })
+    });
   };
 
   setTimeout(() => {
     currentData();
-  }, 300)
+  }, 300);
 
   setTimeout(() => {
+    /** este evento permite actualizar el post en la colección y cierra la modal*/
     document.querySelector('#update-post').addEventListener('click', () => {
-      document.querySelector('#text-post').value
       setPost(document.querySelector('#idPost').value, document.querySelector('#text-post').value);
       const divModalClose = document.querySelector('#modal');
       divModalClose.classList.add('background-modal-none');
       divModalClose.classList.remove('background-modal-show');
-    })
+    });
   }, 3);
-
+  /** este evento permite eliminar el post  */
   setTimeout(() => {
     document.querySelector('#btn-delete').addEventListener('click', () => {
       deletePost(document.querySelector('#btn-delete').value);
-      console.log(document.querySelector('#btn-delete').value)
+      console.log(document.querySelector('#btn-delete').value);
       const divModalDelete = document.querySelector('#modal-delete');
       divModalDelete.classList.remove('background-modal-delete');
       divModalDelete.classList.add('background-modal-delete-none');
     });
   }, 3);
-
+  /** este evento muestra modal de confirmación para eliminar post */ 
   setTimeout(() => {
     document.querySelector('#btn-cancel').addEventListener('click', () => {
       const divModalDelete = document.querySelector('#modal-delete');
@@ -273,12 +261,5 @@ export const home = () => {
       divModalDelete.classList.add('background-modal-delete-none');
     });
   }, 3);
-
-  const likes = () =>{
-
-  }
-
-  // setPost();
   return divHome;
 };
-

@@ -1,8 +1,7 @@
-@media screen and (min-width: 320px) {
-  * {
-    margin: 0;
-    padding: 0;
-  }
+* {
+  margin: 0;
+  padding: 0;
+}
   /*Pagina de Registro*/
   .headSignin {
     display: flex;
@@ -12,7 +11,11 @@
     margin-top: 10%;
     margin-bottom: 5%;
   }
-  
+  .img-login{
+    display: none;
+    width: 0;
+    height: 0;
+  }
   .logo {
 
     width: 50px;
@@ -156,12 +159,15 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
     width: 80%;
     font-family: "Montserrat", sans-serif;
     color: rgba(0, 0, 0, 0.7);
     font-size: 13px;
     font-weight: bolder;
+  }
+  .link-account p{
+    padding: 3px;
   }
   .section-login .link-account {
     margin-top: 5%;
@@ -434,19 +440,18 @@
     display: none;
   }
 
-  .foot{
+  footer{
     display: flex;
+    position:fixed;
     font-family: "Montserrat", sans-serif;
     color: rgba(0, 0, 0, 0.7);
     font-size: 12px;
     font-weight: normal;
     justify-content: center;
     bottom: 0px;
+    width: 100vw;
   }
-  .foot-two{
-    display: none;
-  }
-
+ 
   .background-modal-delete-none{
     display: none;
   }
@@ -528,5 +533,4 @@
   .btn-confirm-delete .btn-cancel{
     color: rgba(0, 0, 0, 0.7);
     bottom: 0;
-  }  
-}
+  }

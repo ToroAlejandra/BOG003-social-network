@@ -1,3 +1,4 @@
+/** Funcion para validar fecha  */
 export const validDate = (date) => {
   const currentDate = new Date();
   let currentYear = currentDate.getFullYear();

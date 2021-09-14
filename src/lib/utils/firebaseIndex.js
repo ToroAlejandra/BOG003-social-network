@@ -11,7 +11,6 @@ export const setDataUser = (user, nameUser, userData, genderUser, dateUser) => {
       date: dateUser,
     })
     .then(() => { });
-  // .catch((error) => error);
 };
 
 /** Registro con cuenta de Google */
@@ -26,7 +25,6 @@ export const loginGoogle = () => {
       /** Actualizar perfil del usuario en firestore */
       setDataUser(user, user.displayName, '', '', '');
       window.location.hash = '#/home';
-      return window.location.hash;
     })
     .catch((error) => error);
 };
@@ -41,23 +39,15 @@ export const sendLink = (userName) => {
       photoURL: 'https://example.com/jane-q-user/profile.jpg',
     })
     .then(() => {
-      // Update successful
-      // ...
       // [Metodo para enviar en mail de verificacion con el nombre de usuario]
       user
         .sendEmailVerification()
         .then(() => {
-          // firebase.auth().currentUser.displayName = user;
           // Email verification sent!
         })
         .catch((error) => error);
-      // [END auth_send_email_verification]
     })
     .catch((error) => error);
-  // {
-  // An error occurred
-  // ...
-  // });
 };
 /** Registro de usuario con correo y contraseña */
 export const signUpWithEmailPassword = (email, password) => {
@@ -75,103 +65,95 @@ export const loginWithPasswordEmail = (email, password) => {
 
 export const getCurrentUser = () => firebase
   .auth().onAuthStateChanged((user) => {
-    if (user) {
-      if (user.emailVerified) {
-        window.location.hash = '#/home';
-      } else {
-        window.location.hash = '#/';
-      }
+    if (user && user.emailVerified) {
+      window.location.hash = '#/home';
+    } else {
+      window.location.hash = '#/';
     }
   });
-
+/** este metodo mantiene la sesion activa hasta que el usuario cierre sesión */
 export const setPersistence = () => {
   firebase
     .auth()
-    .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+    .setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     // eslint-disable-next-line
     .then(() => firebase.auth().signInWithEmailAndPassword(email, password))
     .catch((error) => error);
 };
+/** este metodo permite al usuario cerrar sesión */
 export const signOut = () => {
   const out = firebase
     .auth()
     .signOut()
     .then(() => {
-      // Sign-out successful.
     });
   return out;
 };
-export const addPost = ( currentPost ) => {
+/** este metodo crea una nueva colección (Post) */
+export const addPost = (currentPost) => {
   const user = firebase.auth().currentUser;
   const uid = user.uid;
-  const docRef = db.collection('users').doc(uid); 
-docRef.get().then((doc) => {
-  if (doc.exists) {
-    /* if (doc.data().userName){
-      nickName = doc.data().userName; 
-    }else {
-      nickName = doc.data().name;  
-    } */
+  // eslint-disable-next-line
+  const docRef = db.collection('users').doc(uid);
+  return docRef.get().then((doc) => {
+    if (doc.exists) {
     // eslint-disable-next-line
     db.collection('post')
-      // .doc()
-      .add({
-        userId: docRef,
-        // name: nickName,
-        post: currentPost,
-        likes: [],
-      })
-      .then(() => { 
-        console.log('los datos subieron correctamente')
-      })
-      .catch((error) => {
-        console.log('error' + error)
-      });
-
+        .add({
+          userId: docRef,
+          post: currentPost,
+          likes: [],
+        })
+        .then(() => {
+        })
+        .catch((error) => error);
     } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
+      // doc.data() estaria indefinido en este caso 
+      // doc.data() will be undefined in this case
     }
-}).catch((error) => {
-    console.log("Error getting document:", error);
-});
+  }).catch((error) => error);
 };
-
-export const dataPost = () => db.collection("post")
-
+/** Esta funcion llama a la colección de firestore */
+// eslint-disable-next-line
+export const dataPost = () => db.collection('post');
+/** Esta funcion actualiza los datos de la colección en firestore */
 export const setPost = (idPost, postUpdate) => {
   const userId = firebase.auth().currentUser.uid;
+  // eslint-disable-next-line
   const docRef = db.collection('users').doc(userId);
+  // eslint-disable-next-line
   db.collection('post')
     .doc(idPost)
     .set({
       likes: [],
       post: postUpdate,
-      userId: docRef
+      userId: docRef,
     })
     .then(() => { });
 };
-
+/** Esta funcion elimina los post en firestore */
 export const deletePost = (idPost) => {
-db.collection('post').doc(idPost).delete().then(() => {
-  console.log("Document successfully deleted!");
-}).catch((error) => {
-  console.error("Error removing document: ", error);
-});
+  // eslint-disable-next-line
+  db.collection('post').doc(idPost).delete().then(() => {
+    console.log('Document successfully deleted!');
+  })
+    .catch((error) => {
+      console.error('Error removing document: ', error);
+    });
 };
-
+/** Esta funcion añade un elemento al array de likes en los post en firestore */
 export const addLike = (idPost, idUser) => {
-let collectionLikes = db.collection('post').doc(idPost);
-// Atomically add a new region to the "regions" array field.
-collectionLikes.update({
-    likes: firebase.firestore.FieldValue.arrayUnion(idUser),
-});
-};
-
-export const removeLike = (idPost, idUser) => {
-  let collectionLikes = db.collection('post').doc(idPost);
-  // Atomically add a new region to the "regions" array field.
+  // eslint-disable-next-line
+  const collectionLikes = db.collection('post').doc(idPost);
   collectionLikes.update({
-      likes: firebase.firestore.FieldValue.arrayRemove(idUser),
+    likes: firebase.firestore.FieldValue.arrayUnion(idUser),
   });
-  };
+};
+/** Esta funcion elimina un elemento al array de likes en los post en firestore */
+export const removeLike = (idPost, idUser) => {
+  // eslint-disable-next-line
+  let collectionLikes = db.collection('post').doc(idPost);
+  collectionLikes.update({
+    likes: firebase.firestore.FieldValue.arrayRemove(idUser),
+  });
+};

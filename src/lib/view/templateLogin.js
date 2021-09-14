@@ -6,34 +6,42 @@ export const login = () => {
   const divLogin = document.createElement('div');
   divLogin.setAttribute('class', 'divLogin');
   const viewLogin = `
-  <div class='logo-login'>
-  <h1>Visibles</h1>
-  <img class='logo' src='./images/protest.svg'></img>
-  </div>
-    <div class='section-login'>    
-     <div class='input-group'>
-      <input type='email' id='loginEmail' placeholder='E-mail'> 
-      <input type='password' name='' id='loginPass' placeholder='Contraseña'>
-     </div>
-     <button class='btn-register' id='loginEmailAndPass'> Inicia sesión </button>
-     <div class= "msj-error-date-none" id='mesage-error-login'>
-     <img class= 'bx-errorMesage' src= './images/error_outline.png'></img><p id='unverifiedEmail'></p>
-     </div>
-     <div class='line'>
-        <div class='line-one'>
+  <div class= 'screen-login'>
+   <div class='img-login'>
+    <img src='./images/juntas.webp' alt= 'equidad'></img>
+   </div> 
+   <div class='container-form'>
+      <div class='logo-login'>
+        <h1>Visibles</h1>
+        <img class='logo' src='./images/protest.svg'></img>
+      </div>
+      <div class='section-login'>    
+        <div class='input-group'>
+          <input type='email' id='loginEmail' placeholder='E-mail'> 
+          <input type='password' name='' id='loginPass' placeholder='Contraseña'>
         </div>
-        <p>o ingresa con</p>
-        <div class='line-two'>
+        <button class='btn-register' id='loginEmailAndPass'> Inicia sesión </button>
+          <div class= "msj-error-date-none" id='mesage-error-login'>
+          <img class= 'bx-errorMesage' src= './images/error_outline.png'></img><p id='unverifiedEmail'></p>
         </div>
-     </div>
-     <img src= './images/logo-google.png' id='loginGoogle'></img>
-        <div class='link-account'>
-         <p> ¿No tienes cuenta? </p><a id="signinHref" href='#/signin'>Regístrate</a>
-    </div>
-    </div> 
-    <footer class="foot" > <p class="foot" >&copy Visibles from &lt; L &gt;</p> </footer>
+        <div class='line'>
+            <div class='line-one'>
+            </div>
+            <p>o ingresa con</p>
+            <div class='line-two'>
+            </div>
+        </div>
+        <img src= './images/logo-google.png' id='loginGoogle'></img>
+            <div class='link-account'>
+            <p> ¿No tienes cuenta? </p><a id="signinHref" href='#/signin'>Regístrate</a>
+        </div>
+      </div> 
+   </div>   
+  </div> 
+  <footer> <p class="foot" >&copy Visibles from &lt; L &gt;</p> </footer>
     `;
   divLogin.innerHTML = viewLogin;
+  /** funcion para mantener sesión iniciada */
   setPersistence();
   getCurrentUser();
   const btnGoogle = divLogin.querySelector('#loginGoogle');
