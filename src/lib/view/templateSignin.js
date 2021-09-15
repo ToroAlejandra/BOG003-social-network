@@ -129,7 +129,8 @@ export const signin = () => {
             if (user.emailVerified === false) {
               const inputName = document.querySelector('#inputName').value;
               sendLink(inputName);
-
+              document.querySelector('#msj-verified').classList.remove('msj-verified');
+              document.querySelector('#msj-verified').classList.add('show-msj');
               setDataUser(
                 user,
                 document.querySelector('#inputName').value,
@@ -137,8 +138,6 @@ export const signin = () => {
                 document.querySelector('#gender-select').value,
                 document.querySelector('#date').value,
               );
-              document.querySelector('#msj-verified').classList.remove('msj-verified');
-              document.querySelector('#msj-verified').classList.add('show-msj');
               clearInput();
             }
           })
