@@ -1,13 +1,13 @@
 import {
-  signOut, addPost, dataPost, setPost, removeLike, deletePost, addLike,
+  signOut, addPost, dataPost, setPost, removeLike, deletePost, addLike, getCurrentUser,
 } from '../utils/firebaseIndex.js';
 
 /** Crear div que contiene template de home */
 export const home = () => {
   const divHome = document.createElement('div');
   const viewHome = `
-  <div class= 'body-home'>
-   
+  <section class= 'body-home'>
+   <div class='header-feed'>
     <div class= 'content-header'>
       <div class= 'header-home'>
         <img src= './images/bxs-face.svg' id='photo-user'></img>
@@ -17,15 +17,17 @@ export const home = () => {
 
     <div class='feed' id='feed-post'>
     </div>
-
-    <div class= 'content-menu'>
-      <div class= 'nav-menu'>
-        <img src= './images/bx-home-heart.svg' class='menu-option' id='home-page'></img>
-        <img src= './images/bx-plus.svg' class='menu-option' id='add-post'></img>
-        <img src= './images/bx-log-out.svg' class='menu-option' id='log-out'></img>
-      </div>
-    </div>
   </div>
+    <div class= 'content-menu'>
+      <div class = 'menu-title-icon'>
+        <div class= 'nav-menu'>
+          <img src= './images/bx-home-heart.svg' class='menu-option' id='home-page'></img>
+          <img src= './images/bx-plus.svg' class='menu-option' id='add-post'></img>
+          <img src= './images/bx-log-out.svg' class='menu-option' id='log-out'></img>
+        </div>
+      </div> 
+    </div>
+  </section>
     <div class= 'background-modal-none' id ='modal'>
       <div class= 'post-modal'>
         <div class= 'content-modal'>
@@ -61,6 +63,7 @@ export const home = () => {
     </div>
     `;
   divHome.innerHTML = viewHome;
+
   /** Este evento permite recagar la pagina de home */
   const btnHome = divHome.querySelector('#home-page');
   btnHome.addEventListener('click', () => {
@@ -93,6 +96,9 @@ export const home = () => {
     signOut();
     window.location.hash = '#/';
   });
+  /** funcion para que el usuario ingrese a home si está verificado */
+  getCurrentUser();
+
   /** Este evento permite crear el post y cerrar la modal */
   const btnNewPost = divHome.querySelector('#new-post');
   btnNewPost.addEventListener('click', () => {
@@ -264,3 +270,21 @@ export const home = () => {
   }, 3);
   return divHome;
 };
+
+setTimeout(() => {
+  // eslint-disable-next-line
+  if (screen.width >= 768) {
+    const divTitle = document.createElement('div');
+    divTitle.setAttribute('class', 'div-title');
+    const navHome = document.createElement('p');
+    navHome.textContent = 'Inicio';
+    const navAddPost = document.createElement('p');
+    navAddPost.textContent = 'Crear post';
+    const navLogOut = document.createElement('p');
+    navLogOut.textContent = 'Cerrar sesión';
+    divTitle.appendChild(navHome);
+    divTitle.appendChild(navAddPost);
+    divTitle.appendChild(navLogOut);
+    document.querySelector('.menu-title-icon').appendChild(divTitle);
+  }
+}, 300);

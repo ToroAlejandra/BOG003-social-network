@@ -70,6 +70,7 @@ export const getCurrentUser = () => firebase
     } else {
       window.location.hash = '#/';
     }
+    return window.location.hash;
   });
 /** este metodo mantiene la sesion activa hasta que el usuario cierre sesión */
 export const setPersistence = () => {
@@ -97,8 +98,8 @@ export const addPost = (currentPost) => {
   const docRef = db.collection('users').doc(uid);
   return docRef.get().then((doc) => {
     if (doc.exists) {
-    // eslint-disable-next-line
-    db.collection('post')
+      // eslint-disable-next-line
+      db.collection('post')
         .add({
           userId: docRef,
           post: currentPost,

@@ -1,5 +1,5 @@
 import {
-  loginGoogle, loginWithPasswordEmail, setPersistence, getCurrentUser,
+  loginGoogle, loginWithPasswordEmail, setPersistence,
 } from '../utils/firebaseIndex.js';
 /** Crear div que contiene template de login */
 export const login = () => {
@@ -41,9 +41,10 @@ export const login = () => {
   <footer> <p class="foot" >&copy Visibles from &lt; L &gt;</p> </footer>
     `;
   divLogin.innerHTML = viewLogin;
+
   /** funcion para mantener sesión iniciada */
   setPersistence();
-  getCurrentUser();
+
   const btnGoogle = divLogin.querySelector('#loginGoogle');
   btnGoogle.addEventListener('click', () => {
     loginGoogle();
