@@ -35,11 +35,12 @@ Se realizaron prototipos basados en la encuesta realizada a diferentes personas,
 
 ### Prototipos de alta fidelidad
 
+[Ver prototipos de alta fidelidad](https://www.figma.com/proto/s2gMgpxNZD1jnSBVBDvulA/Social-Network?node-id=46%3A112&scaling=scale-down&page-id=0%3A1&starting-point-node-id=1%3A2&show-proto-sidebar=1)
+
 ![Registro e ingreso](./src/images/PrototypeLogSign.PNG)
 
 ![Página de inicio y crear post](./src/images/PrototypeHomePost.PNG)
 
-[Ver protipos](https://www.figma.com/proto/s2gMgpxNZD1jnSBVBDvulA/Social-Network?node-id=46%3A112&scaling=scale-down&page-id=0%3A1&starting-point-node-id=1%3A2&show-proto-sidebar=1)
 
 ### Restultado final
 
@@ -112,10 +113,8 @@ Al hacer los test de usabilidad se recibieron algunas sugerencias para tener en 
  - [X] Avisarle al usuario que el correo de verificació no fue enviado y que lo confirme para poder logearse
 
  - [X] Hacer el botón de Google más descriptivo
- 
- - [X] Que el logo que se encuentra en login podría llevar el titulo de la app
 
-Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en tu proyecto. Piensa en eso al decidir tu estrategia de trabajo.
+ - [X] Que el logo que se encuentra en login podría llevar el titulo de la app
 
 ## 5. Tecnologías usadas
 
