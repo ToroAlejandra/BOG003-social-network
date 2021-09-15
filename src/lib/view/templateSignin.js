@@ -103,7 +103,7 @@ export const signin = () => {
     const gender = document.querySelector('#gender').value;
     let isValidDate = false;
 
-    /** Validar que no se ingrese una fecha invalida */  
+    /** Validar que no se ingrese una fecha invalida */
     if (date === '' || date === null || date.length < 10) {
       document.querySelector('#msj-error-date').classList.remove('msj-error-date-none');
       document.querySelector('#msj-error-date').classList.add('msj-error-date-show');
@@ -129,7 +129,8 @@ export const signin = () => {
             if (user.emailVerified === false) {
               const inputName = document.querySelector('#inputName').value;
               sendLink(inputName);
-
+              document.querySelector('#msj-verified').classList.remove('msj-verified');
+              document.querySelector('#msj-verified').classList.add('show-msj');
               setDataUser(
                 user,
                 document.querySelector('#inputName').value,
@@ -137,8 +138,6 @@ export const signin = () => {
                 document.querySelector('#gender-select').value,
                 document.querySelector('#date').value,
               );
-              document.querySelector('#msj-verified').classList.remove('msj-verified');
-              document.querySelector('#msj-verified').classList.add('show-msj');
               clearInput();
             }
           })

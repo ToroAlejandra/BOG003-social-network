@@ -302,7 +302,7 @@
    
   }
 
-  .content-menu{
+  .menu-title-icon{
     display: flex;
     justify-content: center;
     position: fixed;
@@ -310,6 +310,9 @@
     left: 0;
     bottom: 0;
     background-color: white;
+  }
+  .div-title{
+    display: none;
   }
   .nav-menu{
     display: flex;
@@ -476,7 +479,7 @@
     display: flex;
     width: 85%;
     min-width: 300px;
-    max-width: 600px;
+    max-width: 350px;
     transform: translate(0px, -20%);
     background-color: #ffffff;
     border-radius: 15px;
@@ -533,4 +536,24 @@
   .btn-confirm-delete .btn-cancel{
     color: rgba(0, 0, 0, 0.7);
     bottom: 0;
+  }
+  
+  .body-notFound p{
+    font-family: "Montserrat", sans-serif;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 20px;
+    font-weight: bolder;
+  }
+  .body-notFound a {
+    color: #802b8b;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    font-weight: bolder;
+  }
+
+  .body-notFound #img-notFound{
+    
+    background-image: url('./images/404mobile.webp');
+    background-repeat: no-repeat;
+    height: 400px;
   }

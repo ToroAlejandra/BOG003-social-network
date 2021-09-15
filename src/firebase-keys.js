@@ -12,5 +12,4 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 // eslint-disable-next-line
-const db = firebase.firestore( app ); 
-firebase.analytics();
+const db = firebase.firestore( app );
